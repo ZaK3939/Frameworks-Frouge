@@ -44,7 +44,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       });
       console.log("transaction", transaction);
       // Revive Player
-      if (active == false && floor == 10) {
+      if (active == false && floor != 10) {
         return new NextResponse(
           getFrameHtml({
             buttons: [
