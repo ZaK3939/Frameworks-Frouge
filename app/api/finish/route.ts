@@ -28,7 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtml({
         buttons: [
           {
-            label: "Game Start Again",
+            label: `Score:${gold} -> Game Start Again`,
           },
           {
             label: `Tx: ${body?.untrustedData?.transactionId || "--"}`,
@@ -37,7 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
         ],
         post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
-        image: `${process.env.NEXT_PUBLIC_URL}/api/images/mint-success?gold=${gold}`,
+        image: `${process.env.NEXT_PUBLIC_URL}/background-images/07_clear_minted.png`,
       }),
     );
   } else return new NextResponse("Unauthorized", { status: 401 });
