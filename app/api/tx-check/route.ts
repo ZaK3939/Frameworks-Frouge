@@ -26,7 +26,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     console.log("playerStageStatus", playerStageStatus);
     if (hp <= 0) {
       console.log("player is DEAD");
-      await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "gameover");
+      await fdk.sendAnalytics(
+        FRAME_ID,
+        body as FrameActionPayload,
+        `gameover-${floor}`,
+      );
       return new NextResponse(
         getFrameHtml({
           buttons: [
