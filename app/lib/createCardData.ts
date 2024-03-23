@@ -14,13 +14,17 @@ export function createGameCardData(
       cardData = enemies[id];
       title = `${cardData.name}`;
       imageUrl = `${id}_${cardData.name}.png`;
-      attributes.push(`🗡️${cardData.attack} 💰${cardData.gold}`);
+      attributes.push(
+        `🗡️${cardData.attack} 🛡️${cardData.defence} 💰${cardData.gold}`,
+      );
       break;
     case "equipment":
       cardData = equipments[id];
       title = `${cardData.name}`;
       imageUrl = `${id}_${cardData.name}.png`;
-      attributes.push(`🗡️${cardData.attack} 💰${cardData.gold}`);
+      attributes.push(
+        `🗡️${cardData.attack} 🛡️${cardData.defence} 💰${cardData.gold}`,
+      );
       if (cardData.isWeapon) attributes.push("Weapon");
       else attributes.push("Armor");
       break;
@@ -28,7 +32,7 @@ export function createGameCardData(
       cardData = items[id];
       title = `${cardData.name}`;
       imageUrl = `${id}_${cardData.name}.png`;
-      attributes.push(`❤️${cardData.recovery}💰${cardData.gold}`);
+      attributes.push(`❤️${cardData.recovery} 💰${cardData.gold}`);
       break;
   }
 

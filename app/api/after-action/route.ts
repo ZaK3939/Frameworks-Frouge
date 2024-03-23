@@ -18,7 +18,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   if (isValid && allowedOrigin(message) && validButton(message)) {
     const option_: number = message.button - 1;
     const playerId_: number = message.interactor.fid;
-    console.log("playerId_", playerId_, "option_", option_);
+    console.log("playerId_", playerId_, "option_", option_, "base.id", base.id);
     const txData: FrameTransactionResponse = {
       chainId: `eip155:${base.id}`,
       method: "eth_sendTransaction",
