@@ -99,7 +99,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/tx-check-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else if (floor == 9) {
@@ -116,7 +116,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/tx-check-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {
