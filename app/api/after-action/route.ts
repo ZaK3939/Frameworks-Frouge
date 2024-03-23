@@ -16,6 +16,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
+    const option_: number = message.button - 1;
+    const playerId_: number = message.interactor.fid;
     const txData: FrameTransactionResponse = {
       chainId: `eip155:${base.id}`,
       method: "eth_sendTransaction",
@@ -24,10 +26,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
         data: encodeFunctionData({
           abi: stageAbi,
           functionName: "gameAction",
-          args: [message.interactor.fid, message.button - 1],
+          args: [playerId_, option_],
         }),
         to: FROUGE_STAGE_ADDRESS,
-        value: parseGwei("10000").toString(), // 0.00001 ETH
+        value: parseGwei("100000").toString(), // 0.00001 ETH
       },
     };
     return NextResponse.json(txData);
