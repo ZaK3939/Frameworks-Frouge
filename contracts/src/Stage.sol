@@ -232,7 +232,7 @@ contract Stage is Ownable, IStage {
                 floor: status[playerId_].floor,
                 weapon: 0,
                 shield: 0,
-                gold: 0,
+                gold: status[playerId_].gold,
                 hp: Constants.playerHP,
                 attack: Constants.playerAttack,
                 defense: Constants.playerDefense,

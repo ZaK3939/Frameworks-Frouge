@@ -63,6 +63,15 @@ contract FrougeNFT is Ownable, ERC1155Supply, EIP712 {
         baseURI = "https://www.arweave.net/";
     }
 
+    function name() public pure returns (string memory) {
+        return "Frougue";
+    }
+
+    /// @dev Returns the token collection symbol.
+    function symbol() public pure returns (string memory) {
+        return "Frougue-NFT";
+    }
+
     /*//////////////////////////////////////////////////////////////
                             EXTERNAL UPDATE
     //////////////////////////////////////////////////////////////*/

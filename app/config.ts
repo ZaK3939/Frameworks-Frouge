@@ -1,9 +1,9 @@
 import { base } from "viem/chains";
 
 export const FROUGE_STAGE_ADDRESS =
-  "0xcb519970dc2c4Eb5Dd294a892A211e23Bf2DcaD8";
+  "0xcf13Ba568Ab1ff4aFb6d4F79799B72187012678f";
 
-export const FROUGE_NFT_ADDRESS = "0x00F2a6b62D03A992084379D5D3a9Ed64c844D720";
+export const FROUGE_NFT_ADDRESS = "0x7B4d0D690dD5E4592D78Fb6aaaee91df3fB9c7a6";
 
 export const CARD_DIMENSIONS = {
   width: 376,

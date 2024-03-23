@@ -18,7 +18,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const searchParams = req.nextUrl.searchParams;
   const transactionId = searchParams.get("transactionId") ?? "";
-  const skip = searchParams.get("skip") ?? "";
+  const gameStartAgain = searchParams.get("gameStartAgain") ?? "";
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -32,9 +32,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "action");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
-    const floor = Number(playerStageStatus.floor);
+    let floor = Number(playerStageStatus.floor);
+    let gold = Number(playerStageStatus.gold);
     const active = playerStageStatus.active;
-    const gold = Number(playerStageStatus.gold);
     const weapon = Number(playerStageStatus.weapon);
     const shield = Number(playerStageStatus.shield);
     const hp = Number(playerStageStatus.hp);
@@ -91,7 +91,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }
     }
     // handling player gameover/gameclear lasttime Play
-    if (skip != "true" && floor != 0 && active == false) {
+    if (gameStartAgain != "true" && floor != 0 && active == false) {
       console.log("player is DEAD");
       return new NextResponse(
         getFrameHtml({
@@ -106,7 +106,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?skip=true`,
+          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
         }),
       );
@@ -138,6 +138,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     } else {
       // Normal Battle
+      if (gameStartAgain == "true") {
+        floor = 0;
+        gold = 0;
+      }
       let nextActions = await getAllNextAction(fid);
       console.log("normal battle", nextActions);
       return new NextResponse(
