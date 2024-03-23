@@ -8,7 +8,7 @@ import { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { base } from "viem/chains";
 import { FROUGE_NFT_ADDRESS } from "@/app/config";
 
-export const nftAbi = [
+const nftAbi = [
   {
     type: "function",
     name: "mint",
@@ -62,8 +62,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         console.error(e);
         return errorResponse();
       }
-      console.log("go to errorResponse:mint");
-      return errorResponse();
     } else {
       return verifiedAccounts(fid);
     }
