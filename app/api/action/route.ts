@@ -66,6 +66,27 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           }),
         );
       }
+      if (active == false && floor == 10) {
+        console.log("Game Clear");
+        await fdk.sendAnalytics(
+          FRAME_ID,
+          body as FrameActionPayload,
+          "gameclear",
+        );
+        // Game Clear
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                action: "tx",
+                label: "🎉 Game Clear: Lets mint NFT with your Score",
+                target: `${process.env.NEXT_PUBLIC_URL}/api/after-mint?gold=${gold}`,
+              },
+            ],
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
+          }),
+        );
+      }
     }
     // handling player gameover/gameclear lasttime Play
     if (skip != "true" && floor != 0 && active == false) {
@@ -139,26 +160,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
-        }),
-      );
-    } else {
-      console.log("Game Clear");
-      await fdk.sendAnalytics(
-        FRAME_ID,
-        body as FrameActionPayload,
-        "gameclear",
-      );
-      // Game Clear
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [
-            {
-              action: "tx",
-              label: "🎉 Game Clear: Lets mint NFT with your Score",
-              target: `${process.env.NEXT_PUBLIC_URL}/api/after-mint?gold=${gold}`,
-            },
-          ],
-          image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
         }),
       );
     }
