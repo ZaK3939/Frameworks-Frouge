@@ -100,6 +100,7 @@ export function Card({
             title={enemyCardData.title}
             imageUrl={enemyCardData.imageUrl}
             attributes={enemyCardData.attributes}
+            category="enemy"
           />
         )}
         {equipmentCardData && (
@@ -107,6 +108,7 @@ export function Card({
             title={equipmentCardData.title}
             imageUrl={equipmentCardData.imageUrl}
             attributes={equipmentCardData.attributes}
+            category="equipment"
           />
         )}
         {itemCardData && (
@@ -114,6 +116,7 @@ export function Card({
             title={itemCardData.title}
             imageUrl={itemCardData.imageUrl}
             attributes={itemCardData.attributes}
+            category="item"
           />
         )}
       </div>
