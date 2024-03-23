@@ -109,9 +109,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       // Boss Battle
       return new NextResponse(
         getFrameHtml({
-          buttons: [{ label: "🗡️ Boss Battle" }],
+          buttons: [
+            {
+              action: "tx",
+              label: "🗡️ Boss Battle",
+              target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+            },
+          ],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
-          postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
         }),
       );
     } else {

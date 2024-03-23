@@ -8,11 +8,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
   });
-
+  console.log("Transaction ID", body?.untrustedData?.transactionId);
   if (isValid && allowedOrigin(message)) {
     // TODO: Check the status of the transaction
     // https://viem.sh/docs/actions/public/getTransactionReceipt#gettransactionreceipt
-    console.log("Transaction ID", body?.untrustedData?.transactionId);
+
     return new NextResponse(
       getFrameHtml({
         buttons: [
