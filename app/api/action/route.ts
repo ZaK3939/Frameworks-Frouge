@@ -104,6 +104,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     } else if (floor == 9) {
       let nextActions = await getAllNextAction(fid);
+      await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "boss");
       console.log("boss Actions", nextActions);
       // Boss Battle
       return new NextResponse(
@@ -121,6 +122,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     } else {
       console.log("Game Clear");
+      await fdk.sendAnalytics(
+        FRAME_ID,
+        body as FrameActionPayload,
+        "gameclear",
+      );
       // Game Clear
       return new NextResponse(
         getFrameHtml({
