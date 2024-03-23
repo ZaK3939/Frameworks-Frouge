@@ -11,8 +11,6 @@ import {
 } from "../../lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { validButton } from "@/app/lib/buttonUtil";
-import { error } from "console";
-import { errorResponse } from "@/app/lib/responses";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -87,6 +85,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                 action: "tx",
                 label: "🎉 Game Clear: Lets mint NFT with your Score",
                 target: `${process.env.NEXT_PUBLIC_URL}/api/after-mint?gold=${gold}`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/finish`,
               },
             ],
             image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
