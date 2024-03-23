@@ -5,7 +5,8 @@ import { base } from "viem/chains";
 
 const viemClientForBase = createPublicClient({
   chain: base,
-  transport: http(),
+  // transport: http(),
+  transport: http(`${process.env.BASE_PRC}`),
 });
 
 export const stageAbi = [

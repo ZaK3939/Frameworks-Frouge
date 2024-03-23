@@ -14,7 +14,7 @@ import { validButton } from "@/app/lib/buttonUtil";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
-  const searchParams = req.nextUrl.searchParams;
+
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -45,7 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "Player Revive",
               target: `${process.env.NEXT_PUBLIC_URL}/api/aftertx`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
@@ -63,7 +63,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "Player Revive",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
@@ -85,22 +85,22 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: `🗡️ Battle`,
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
             {
               action: "tx",
               label: "🛡️ Equipment",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
             {
               action: "tx",
               label: "🏠 Rest",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/tx-check-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else if (floor == 9) {
@@ -114,10 +114,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "🗡️ Boss Battle",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/tx-check-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {
