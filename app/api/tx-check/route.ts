@@ -32,7 +32,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     let data;
     if (message.button == 1) {
       data = enemies[Number(next)];
-      resultText = `Beat ${data.name} 🎉`;
+      resultText = `You defeat ${data.name} 👾`;
     } else if (message.button == 2) {
       data = equipments[Number(next)];
       if (Number(gold) < Number(data.gold)) {
@@ -45,7 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       if (Number(gold) < Number(data.gold)) {
         resultText = `Not enough gold 😢`;
       } else {
-        resultText = `${data.recovery} Healed ❤️`;
+        resultText = ` Healed ${data.recovery} ❤️`;
       }
     }
     await fdk.sendAnalytics(
