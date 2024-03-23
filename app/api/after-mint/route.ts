@@ -70,6 +70,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         return NextResponse.json(txData);
       } catch (e) {
         console.error(e);
+        await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, `Error`);
         return errorResponse();
       }
     } else {
