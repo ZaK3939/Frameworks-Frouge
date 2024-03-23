@@ -36,8 +36,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   return new NextResponse("Message not valid", { status: 500 });
 }
 
-// TODO
-
 export async function POST(req: NextRequest): Promise<Response> {
   return getResponse(req);
 }
