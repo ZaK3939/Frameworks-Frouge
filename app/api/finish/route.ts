@@ -28,11 +28,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtml({
         buttons: [
           {
+            label: "Game Start Again",
+          },
+          {
             label: `Tx: ${body?.untrustedData?.transactionId || "--"}`,
             action: "link",
             target: `https://basescan.org/tx/${body?.untrustedData?.transactionId}`,
           },
         ],
+        post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
         image: `${process.env.NEXT_PUBLIC_URL}/api/images/mint-success?gold=${gold}`,
       }),
     );
