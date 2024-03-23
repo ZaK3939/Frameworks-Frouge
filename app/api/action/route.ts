@@ -117,6 +117,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
     );
+    // Boss Battle
     if (floor == 9) {
       let nextActions = await getAllNextAction(fid);
       await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "boss");
@@ -136,9 +137,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }),
       );
     } else {
+      // Normal Battle
       let nextActions = await getAllNextAction(fid);
       console.log("normal battle", nextActions);
-      // Normal Battle
       return new NextResponse(
         getFrameHtml({
           buttons: [
