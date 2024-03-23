@@ -121,6 +121,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
     );
+    // Go to LeaderBoard page
+    if (message?.button === 2) {
+      return new NextResponse(
+        getFrameHtml({
+          buttons: [
+            { label: `Home` }
+          ],
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
+          post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
+        }),
+      );
+    }
     // Boss Battle
     if (floor == 9) {
       let nextActions = await getAllNextAction(fid);
