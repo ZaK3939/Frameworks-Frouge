@@ -29,18 +29,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   return (
-    <div>
-      <div className="flex flex-col md:flex-row md:items-center justify-center min-h-screen items-start font-body">
-        <div className="w-full md:w-1/4 flex flex-col items-center md:items-start space-y-4 mt-4 md:mt-0 md:pl-4">
-          <h1 className="text-2xl font-bold">Frogue</h1>
-          <div className="text-xs text-stone-400 hover:underline tracking-tighter text-center">
-            <a
-              href="https://github.com/OnchainGame/demo-non-field-rpg"
-              target="_blank"
-            >
-              See code on Github
-            </a>
-          </div>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full max-w-md flex flex-col items-center space-y-4">
+        <h1 className="text-2xl font-bold">Frogue</h1>
+        <div className="text-xs text-stone-400 hover:underline tracking-tighter text-center">
+          <a
+            href="https://github.com/ZaK3939/Frameworks-Frouge"
+            target="_blank"
+          >
+            See code on Github
+          </a>
         </div>
       </div>
     </div>
