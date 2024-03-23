@@ -85,19 +85,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: `🗡️ Battle`,
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
             },
             {
               action: "tx",
               label: "🛡️ Equipment",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
             },
             {
               action: "tx",
               label: "🏠 Rest",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
@@ -114,7 +114,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "🗡️ Boss Battle",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
@@ -125,9 +125,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       // Game Clear
       return new NextResponse(
         getFrameHtml({
-          buttons: [{ label: "🎉 Game Clear: Lets mint NFT with your Score" }],
+          buttons: [
+            {
+              action: "tx",
+              label: "🎉 Game Clear: Lets mint NFT with your Score",
+              target: `${process.env.NEXT_PUBLIC_URL}/api/after-mint?gold=${gold}`,
+            },
+          ],
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/mint-relay?gold=${gold}`,
         }),
       );
     }
