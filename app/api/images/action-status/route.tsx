@@ -26,24 +26,6 @@ export async function GET(req: NextRequest) {
     itemId,
   );
 
-  if (Number(floor) === 0) {
-    return new ImageResponse(
-      (
-        <Card
-          message={`Please select your action `}
-          floor={Number(floor)}
-          gold={Number(gold)}
-          hp={Number(hp)}
-          weapon={weapon}
-          shield={shield}
-          enemyId={Number(enemyId)}
-          equipmentId={Number(equipmentId)}
-          itemId={Number(itemId)}
-        />
-      ),
-      CARD_DIMENSIONS,
-    );
-  }
   if (Number(floor) === 9) {
     return new ImageResponse(
       (
@@ -66,7 +48,7 @@ export async function GET(req: NextRequest) {
   return new ImageResponse(
     (
       <Card
-        message={`What is your next action ?`}
+        message={`What is your action ?`}
         floor={Number(floor)}
         gold={Number(gold)}
         hp={Number(hp)}
