@@ -2,7 +2,6 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { allowedOrigin } from "../../lib/origin";
 import { getFrameHtml } from "../../lib/getFrameHtml";
-import { errorResponse, verifiedAccounts } from "../../lib/responses";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
