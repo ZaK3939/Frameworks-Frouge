@@ -58,12 +58,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           getFrameHtml({
             buttons: [
               {
+                label: "Game Start Again",
+              },
+              {
                 action: "tx",
                 label: "Player Revive",
                 target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
                 postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
               },
             ],
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
             image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
           }),
         );
