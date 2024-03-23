@@ -1,4 +1,5 @@
 import { GameCard } from "./Game/GameCard";
+import { GameCardBoss } from "./Game/GameCardBoss";
 import { GameStatus } from "./Game/GameStatus";
 import { GameMessage } from "./Game/GameMessage";
 import React from "react";
@@ -35,6 +36,39 @@ export function Card({
   const itemCardData = itemId ? createGameCardData("item", itemId) : null;
   const weaponAttack = weapon ? equipments[Number(weapon)].attack : 0;
   const shieldDefence = shield ? equipments[Number(shield)].defence : 0;
+
+  if (Number(floor) === 9) {
+    return (
+      <div
+        style={{
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_URL}/background-images/04_game_stage.png)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        tw={`relative flex flex-col items-start text-center w-[376px] h-[196px] p-2 overflow-auto`}
+      >
+        <div tw="flex justify-between w-full mb-1">
+          {/* Left up */}
+          <GameMessage message={message} />
+          {/* Right up */}
+          <GameStatus
+            floor={floor || 0}
+            gold={gold || 0}
+            hp={hp || 20}
+            maxhp={maxhp || 20}
+            weapon={weaponAttack || 0}
+            shield={shieldDefence || 0}
+          />
+        </div>
+
+        {/* Boss cards */}
+        <div tw="flex justify-center w-full">
+          <GameCardBoss />
+        </div>
+      </div>
+    );
+
+  }
 
   return (
     <div
