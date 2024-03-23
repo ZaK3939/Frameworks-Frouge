@@ -30,7 +30,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
           args: [playerId_, option_],
         }),
         to: FROUGE_STAGE_ADDRESS,
-        value: parseEther("0.00004").toString(), // 0.00004 ETH
+        value: parseEther("0.000001").toString(), // 0.000001 ETH
       },
     };
     console.log("txData", txData);
