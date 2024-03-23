@@ -3,7 +3,7 @@ import { GameStatus } from "./Game/GameStatus";
 import { GameMessage } from "./Game/GameMessage";
 import React from "react";
 import { createGameCardData } from "../lib/createCardData";
-import { equipments, items } from "../data";
+import { equipments } from "../data";
 
 export function Card({
   message,
@@ -22,8 +22,8 @@ export function Card({
   gold?: number;
   hp?: number;
   maxhp?: number;
-  weapon?: string;
-  shield?: string;
+  weapon?: number;
+  shield?: number;
   enemyId?: number;
   equipmentId?: number;
   itemId?: number;
@@ -33,12 +33,9 @@ export function Card({
     ? createGameCardData("equipment", equipmentId)
     : null;
   const itemCardData = itemId ? createGameCardData("item", itemId) : null;
-  const weaponAttack = weapon
-    ? equipments[Number(weapon)].attack.toString()
-    : "0";
-  const shieldDefence = shield
-    ? equipments[Number(shield)].defence.toString()
-    : "0";
+  const weaponAttack = weapon ? equipments[Number(weapon)].attack : 0;
+  const shieldDefence = shield ? equipments[Number(shield)].defence : 0;
+
   return (
     <div
       style={{
@@ -57,8 +54,8 @@ export function Card({
           gold={gold || 0}
           hp={hp || 20}
           maxhp={maxhp || 20}
-          weapon={weaponAttack || ""}
-          shield={shieldDefence || ""}
+          weapon={weaponAttack || 0}
+          shield={shieldDefence || 0}
         />
       </div>
 

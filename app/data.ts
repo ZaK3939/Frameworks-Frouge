@@ -29,6 +29,7 @@ export const enemies: Record<number, Enemy> = {
 };
 
 export const equipments: Record<number, Equipment> = {
+  0: { name: "none", isWeapon: false, attack: 0, defence: 0, gold: 0 },
   1: { name: "stick", isWeapon: true, attack: 2, defence: 0, gold: 7 },
   2: { name: "sling_shot", isWeapon: true, attack: 7, defence: 0, gold: 25 },
   3: { name: "shield", isWeapon: false, attack: 0, defence: 1, gold: 8 },
