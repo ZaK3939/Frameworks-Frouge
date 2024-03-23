@@ -33,12 +33,10 @@ export function Card({
     ? createGameCardData("equipment", equipmentId)
     : null;
   const itemCardData = itemId ? createGameCardData("item", itemId) : null;
-  const weaponAttack = weapon
-    ? equipments[Number(weapon)].attack.toString()
-    : null;
-  const shieldDefence = shield
-    ? equipments[Number(shield)].defence.toString()
-    : null;
+  const weaponAttack =
+    weapon !== "0" ? equipments[Number(weapon)].attack.toString() : "0";
+  const shieldDefence =
+    shield !== "0" ? equipments[Number(shield)].defence.toString() : "0";
   return (
     <div
       style={{
