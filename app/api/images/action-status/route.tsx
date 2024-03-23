@@ -5,6 +5,7 @@ import { CARD_DIMENSIONS } from "../../../config";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
+  const resultText = searchParams.get("resultText") ?? "";
   const floor = searchParams.get("floor") ?? "";
   const gold = searchParams.get("gold") ?? "";
   const hp = searchParams.get("hp") ?? "";
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
     return new ImageResponse(
       (
         <Card
-          message={`Boss Battle `}
+          message={`${resultText} Go Boss Battle !!`}
           floor={Number(floor)}
           gold={Number(gold)}
           hp={Number(hp)}
@@ -37,7 +38,7 @@ export async function GET(req: NextRequest) {
   return new ImageResponse(
     (
       <Card
-        message={`What is your action ?`}
+        message={`${resultText} What is your action ?`}
         floor={Number(floor)}
         gold={Number(gold)}
         hp={Number(hp)}

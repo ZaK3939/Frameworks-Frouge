@@ -16,6 +16,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const searchParams = req.nextUrl.searchParams;
   const transactionId = searchParams.get("transactionId") ?? "";
+  const resultText = searchParams.get("resultText") ?? "";
   const gameStartAgain = searchParams.get("gameStartAgain") ?? "";
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
@@ -124,9 +125,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     if (message?.button === 2) {
       return new NextResponse(
         getFrameHtml({
-          buttons: [
-            { label: `Home` }
-          ],
+          buttons: [{ label: `Home` }],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
         }),
@@ -166,22 +165,22 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: `🗡️ Battle`,
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.enemyId}`,
             },
             {
               action: "tx",
               label: "🛡️ Equipment",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.equipmentId}&gold=${gold}`,
             },
             {
               action: "tx",
               label: "🏠 Rest",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.itemId}&gold=${gold}`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?resultText=${resultText}&nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     }
