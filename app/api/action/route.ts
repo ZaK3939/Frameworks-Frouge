@@ -7,13 +7,15 @@ import { getFrameHtml } from "../../lib/getFrameHtml";
 import {
   getAllNextAction,
   getPlayerStageStatus,
+  viemClientForBase,
 } from "../../lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { validButton } from "@/app/lib/buttonUtil";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
-
+  const searchParams = req.nextUrl.searchParams;
+  const transactionId = searchParams.get("transactionId") ?? "";
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -35,6 +37,29 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const hp = Number(playerStageStatus.hp);
     console.log("playerStageStatus", playerStageStatus);
 
+    // check lasttime transaction status
+    if (transactionId) {
+      const transaction = await viemClientForBase.getTransactionReceipt({
+        hash: `${transactionId}` as `0x${string}`,
+      });
+      console.log("transaction", transaction);
+      // Revive Player
+      if (active == false) {
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                action: "tx",
+                label: "Player Revive",
+                target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              },
+            ],
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
+          }),
+        );
+      }
+    }
     // handling player gameover/gameclear lasttime Play
     if (hp == 0 && floor != 0 && active == false) {
       console.log("player is DEAD");

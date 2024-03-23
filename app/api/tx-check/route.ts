@@ -2,10 +2,7 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
 import { allowedOrigin } from "../../lib/origin";
 import { getFrameHtml } from "../../lib/getFrameHtml";
-import {
-  getPlayerStageStatus,
-  viemClientForBase,
-} from "@/app/lib/checkPlayerStatus";
+import { getPlayerStageStatus } from "@/app/lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { FRAME_ID } from "@/app/config";
 
@@ -26,10 +23,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const playerStageStatus = await getPlayerStageStatus(fid);
     const floor = Number(playerStageStatus.floor);
     console.log("tx:playerStageStatus", playerStageStatus);
-    const transaction = await viemClientForBase.getTransactionReceipt({
-      hash: `${body?.untrustedData?.transactionId}` as `0x${string}`,
-    });
-    console.log("tx:transaction", transaction);
 
     await fdk.sendAnalytics(
       FRAME_ID,
@@ -48,7 +41,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             target: `https://basescan.org/tx/${body?.untrustedData?.transactionId}`,
           },
         ],
-        post_url: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+        post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?transactionId=${body?.untrustedData?.transactionId}`,
         image: `${process.env.NEXT_PUBLIC_URL}/api/images/que`,
       }),
     );
