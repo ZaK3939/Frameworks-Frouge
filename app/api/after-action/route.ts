@@ -1,6 +1,6 @@
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
-import { encodeFunctionData, parseGwei } from "viem";
+import { encodeFunctionData, parseEther, parseGwei } from "viem";
 import { stageAbi } from "../../lib/checkPlayerStatus";
 import { base } from "viem/chains";
 import { FROUGE_STAGE_ADDRESS } from "../../config";
@@ -30,7 +30,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
           args: [playerId_, option_],
         }),
         to: FROUGE_STAGE_ADDRESS,
-        value: parseGwei("10000").toString(), // 0.00001 ETH
+        value: parseEther("0.00004").toString(), // 0.00004 ETH
       },
     };
     console.log("txData", txData);
