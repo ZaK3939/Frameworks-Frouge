@@ -19,7 +19,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           {
             label: `Tx: ${body?.untrustedData?.transactionId || "--"}`,
             action: "link",
-            target: `https://explorer-frame.syndicate.io/tx/${body?.untrustedData?.transactionId}`,
+            target: `https://basescan.org/tx/${body?.untrustedData?.transactionId}`,
           },
           {
             label: `Go Next`,
