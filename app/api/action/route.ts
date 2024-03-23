@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { FRAME_ID } from "../../config";
 import { allowedOrigin } from "../../lib/origin";
 import { getFrameHtml } from "../../lib/getFrameHtml";
-import { errorResponse } from "../../lib/responses";
 
 import {
   getAllNextAction,
