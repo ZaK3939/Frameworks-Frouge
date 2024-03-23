@@ -183,21 +183,39 @@ contract Stage is Ownable, IStage {
     }
 
     function getNextEnemy(uint256 playerId_) public view returns (uint256) {
-        uint256 _randomNumber = nextRandom[playerId_];
+        uint256 _randomNumber;
+        if (status[playerId_].floor == topFloor) {
+            _randomNumber = nextRandom[playerId_];
+            _randomNumber = _randomNumber % floorEnemy[0].length;
+            return floorEnemy[0][_randomNumber];
+        }
+        _randomNumber = nextRandom[playerId_];
         _randomNumber = _randomNumber % floorEnemy[status[playerId_].floor].length;
 
         return floorEnemy[status[playerId_].floor][_randomNumber];
     }
 
     function getNextEquipment(uint256 playerId_) public view returns (uint256) {
-        uint256 _randomNumber = nextRandom[playerId_];
+        uint256 _randomNumber;
+        if (status[playerId_].floor == topFloor) {
+            _randomNumber = nextRandom[playerId_];
+            _randomNumber = _randomNumber % floorEquipment[0].length;
+            return floorEquipment[0][_randomNumber];
+        }
+        _randomNumber = nextRandom[playerId_];
         _randomNumber = _randomNumber % floorEquipment[status[playerId_].floor].length;
 
         return floorEquipment[status[playerId_].floor][_randomNumber];
     }
 
     function getNextRestItem(uint256 playerId_) public view returns (uint256) {
-        uint256 _randomNumber = nextRandom[playerId_];
+        uint256 _randomNumber;
+        if (status[playerId_].floor == topFloor) {
+            _randomNumber = nextRandom[playerId_];
+            _randomNumber = _randomNumber % floorItem[0].length;
+            return floorItem[0][_randomNumber];
+        }
+        _randomNumber = nextRandom[playerId_];
         _randomNumber = _randomNumber % floorItem[status[playerId_].floor].length;
 
         return floorItem[status[playerId_].floor][_randomNumber];
