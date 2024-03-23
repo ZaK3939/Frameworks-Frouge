@@ -34,8 +34,8 @@ export async function GET(req: NextRequest) {
           floor={Number(floor)}
           gold={Number(gold)}
           hp={Number(hp)}
-          weapon={weapon}
-          shield={shield}
+          weapon={Number(weapon)}
+          shield={Number(shield)}
           enemyId={Number(enemyId)}
           equipmentId={Number(equipmentId)}
           itemId={Number(itemId)}
@@ -52,8 +52,8 @@ export async function GET(req: NextRequest) {
         floor={Number(floor)}
         gold={Number(gold)}
         hp={Number(hp)}
-        weapon={weapon}
-        shield={shield}
+        weapon={Number(weapon)}
+        shield={Number(shield)}
         enemyId={Number(enemyId)}
         equipmentId={Number(equipmentId)}
         itemId={Number(itemId)}
