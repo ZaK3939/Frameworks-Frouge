@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "arcade";
+  src: url("/fonts/JMH Cthulhumbus Arcade.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
