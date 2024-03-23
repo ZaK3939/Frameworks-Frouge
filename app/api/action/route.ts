@@ -11,6 +11,8 @@ import {
 } from "../../lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { validButton } from "@/app/lib/buttonUtil";
+import { error } from "console";
+import { errorResponse } from "@/app/lib/responses";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -50,7 +52,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `game-over${floor.toString()}`,
+          `gameOver-${floor.toString()}`,
         );
         return new NextResponse(
           getFrameHtml({
@@ -71,7 +73,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          "gameclear",
+          "gameClear",
         );
         // Game Clear
         return new NextResponse(
@@ -162,6 +164,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
+    } else {
+      return errorResponse();
     }
   } else return new NextResponse("Unauthorized", { status: 401 });
 }
