@@ -18,6 +18,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   if (isValid && allowedOrigin(message) && validButton(message)) {
     const option_: number = message.button - 1;
     const playerId_: number = message.interactor.fid;
+    console.log("playerId_", playerId_, "option_", option_);
     const txData: FrameTransactionResponse = {
       chainId: `eip155:${base.id}`,
       method: "eth_sendTransaction",
@@ -29,9 +30,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
           args: [playerId_, option_],
         }),
         to: FROUGE_STAGE_ADDRESS,
-        value: parseGwei("100000").toString(), // 0.00001 ETH
+        value: parseGwei("10000").toString(), // 0.00001 ETH
       },
     };
+    console.log("txData", txData);
     return NextResponse.json(txData);
   }
 
