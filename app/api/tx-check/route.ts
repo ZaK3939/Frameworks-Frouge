@@ -66,7 +66,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
         ],
         post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?transactionId=${body?.untrustedData?.transactionId}&resultText=${resultText}`,
-        image: `${process.env.NEXT_PUBLIC_URL}/api/images/que`,
+        image: `${process.env.NEXT_PUBLIC_URL}/gif/que.gif`,
       }),
     );
   } else return new NextResponse("Unauthorized", { status: 401 });

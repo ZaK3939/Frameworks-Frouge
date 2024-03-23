@@ -8,8 +8,8 @@ export const GameCardBoss = ({
       <div tw="w-full flex justify-center">
         <img
           src={`${process.env.NEXT_PUBLIC_URL}/card-images/105_king_frog.png`}
-          width={200}
-          height={40}
+          width={121}
+          height={60}
           alt={`Boss`}
         />
       </div>
