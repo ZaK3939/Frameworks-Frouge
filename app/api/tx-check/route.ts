@@ -38,7 +38,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       if (Number(gold) < Number(data.gold)) {
         resultText = `Not enough gold 😢`;
       } else {
-        resultText = `${data.name} Purchased 🗡️`;
+        resultText = `Purchased ${data.name} 🗡️`;
       }
     } else if (message.button == 3) {
       data = items[Number(next)];
