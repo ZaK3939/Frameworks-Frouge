@@ -45,7 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       if (Number(gold) < Number(data.gold)) {
         resultText = `Not enough gold 😢`;
       } else {
-        resultText = ` Healed ${data.recovery} ❤️`;
+        resultText = `Healed ${data.recovery} ❤️`;
       }
     }
     await fdk.sendAnalytics(
