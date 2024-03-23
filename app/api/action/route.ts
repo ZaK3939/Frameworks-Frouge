@@ -35,24 +35,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const shield = Number(playerStageStatus.shield);
     const hp = Number(playerStageStatus.hp);
     console.log("playerStageStatus", playerStageStatus);
-    if (hp <= 0) {
-      console.log("player is DEAD");
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [
-            {
-              action: "tx",
-              label: "Player Revive",
-              target: `${process.env.NEXT_PUBLIC_URL}/api/aftertx`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
-            },
-          ],
-          image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
-        }),
-      );
-    }
 
-    // This random value for debugging purpose
+    // handling player gameover/gameclear lasttime Play
     if (hp == 0 && floor != 0 && active == false) {
       console.log("player is DEAD");
       return new NextResponse(
@@ -69,6 +53,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }),
       );
     }
+
+    // start game
     console.log(
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
