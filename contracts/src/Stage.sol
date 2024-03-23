@@ -211,7 +211,7 @@ contract Stage is Ownable, IStage {
         if (status[playerId_].active == false) {
             return PlayerStageStatus({
                 playerId: playerId_,
-                floor: 0,
+                floor: status[playerId_].floor,
                 weapon: 0,
                 shield: 0,
                 gold: 0,

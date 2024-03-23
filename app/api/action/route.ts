@@ -16,6 +16,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const searchParams = req.nextUrl.searchParams;
   const transactionId = searchParams.get("transactionId") ?? "";
+  const skip = searchParams.get("skip") ?? "";
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -43,8 +44,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         hash: `${transactionId}` as `0x${string}`,
       });
       console.log("transaction", transaction);
-      // Revive Player
-      // execept gameClaer
+      // Revive Player except gameClaer
+      console.log("player revive", active, floor);
       if (active == false && floor != 10) {
         await fdk.sendAnalytics(
           FRAME_ID,
@@ -67,11 +68,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }
     }
     // handling player gameover/gameclear lasttime Play
-    if (hp == 0 && floor != 0 && active == false) {
+    if (skip != "true" && floor != 0 && active == false) {
       console.log("player is DEAD");
       return new NextResponse(
         getFrameHtml({
           buttons: [
+            {
+              label: "Game Start Again",
+            },
             {
               action: "tx",
               label: "Player Revive",
@@ -79,6 +83,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
+          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?skip=true`,
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
         }),
       );
