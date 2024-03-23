@@ -33,7 +33,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
         value: parseEther("0.000001").toString(), // 0.000001 ETH
       },
     };
-    console.log("txData", txData);
     return NextResponse.json(txData);
   }
 
