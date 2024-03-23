@@ -62,12 +62,12 @@ export const stageAbi = [
     ],
     stateMutability: "view",
   },
-  {
-    name: "gameAction",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+  // {
+  //   name: "gameAction",
+  //   outputs: [],
+  //   stateMutability: "nonpayable",
+  //   type: "function",
+  // },
   {
     type: "function",
     name: "gameAction",
