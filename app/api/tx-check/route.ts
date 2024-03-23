@@ -23,7 +23,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const playerStageStatus = await getPlayerStageStatus(fid);
     const hp = Number(playerStageStatus.hp);
     const floor = Number(playerStageStatus.floor);
-    console.log("playerStageStatus", playerStageStatus);
+    console.log("tx:playerStageStatus", playerStageStatus);
+
     if (hp <= 0) {
       console.log("player is DEAD");
       await fdk.sendAnalytics(

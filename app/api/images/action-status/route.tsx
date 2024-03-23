@@ -14,17 +14,6 @@ export async function GET(req: NextRequest) {
   const enemyId = searchParams.get("nextEnemy") ?? "";
   const equipmentId = searchParams.get("nextEquipment") ?? "";
   const itemId = searchParams.get("nextItem") ?? "";
-  console.log(
-    "Card",
-    floor,
-    gold,
-    hp,
-    weapon,
-    shield,
-    enemyId,
-    equipmentId,
-    itemId,
-  );
 
   if (Number(floor) === 9) {
     return new ImageResponse(

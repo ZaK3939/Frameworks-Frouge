@@ -35,7 +35,7 @@ export function Card({
   const itemCardData = itemId ? createGameCardData("item", itemId) : null;
   const weaponAttack = weapon ? equipments[Number(weapon)].attack : 0;
   const shieldDefence = shield ? equipments[Number(shield)].defence : 0;
-  console.log(weaponAttack, shieldDefence);
+
   return (
     <div
       style={{

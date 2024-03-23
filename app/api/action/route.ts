@@ -24,7 +24,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
-    console.log("Transaction ID?", body?.untrustedData?.transactionId);
     await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "action");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
