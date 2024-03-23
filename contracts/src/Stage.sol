@@ -99,7 +99,7 @@ contract Stage is Ownable, IStage {
                             EXTERNAL UPDATE
     //////////////////////////////////////////////////////////////*/
 
-    function gameAction(uint256 playerId_, uint8 option_) external {
+    function gameAction(uint256 playerId_, uint8 option_) external payable {
         if (status[playerId_].active == false) {
             status[playerId_] = PlayerStageStatus({
                 playerId: playerId_,
@@ -122,6 +122,7 @@ contract Stage is Ownable, IStage {
             // revert INVALID_ACTION();
         }
         console2.log("gameAction: ", option_);
+
         _Action(playerId_, option_, getNextRondom(playerId_));
 
         nextRandom[playerId_] = randomContract.getRandomNumber();
@@ -130,6 +131,7 @@ contract Stage is Ownable, IStage {
             _gameClear(playerId_);
             console2.log("gameClear: ", playerId_);
         }
+        address(feeDestination).safeTransferETH(msg.value);
     }
 
     function reviveUser(uint256 playerId_) external payable {

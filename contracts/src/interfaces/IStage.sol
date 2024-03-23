@@ -51,9 +51,10 @@ interface IStage {
         external;
 
     // Update Functions
-    function gameAction(uint256 playerId_, uint8 option_) external;
+    function gameAction(uint256 playerId_, uint8 option_) external payable;
 
     function reviveUser(uint256 playerId_) external payable;
+
     // Read Functions
     function getNextEnemy(uint256 floor_) external view returns (uint256);
 

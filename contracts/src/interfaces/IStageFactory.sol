@@ -27,6 +27,17 @@ interface IStageFactory {
     // Events
     event StageContractCreated(address indexed creator, address indexed contractAddress, string stageType);
 
+    // initializer
+    function initialize(
+        address _broadcaster,
+        address payable _stage,
+        address _battle,
+        address _enemy,
+        address _equipment,
+        address _random
+    )
+        external;
+
     // Update Functions
     function createGameStage(
         string memory _name,

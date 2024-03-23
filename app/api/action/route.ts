@@ -1,6 +1,6 @@
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { NextRequest, NextResponse } from "next/server";
-import { FRAME_ID, SIG_GAME_ACTION } from "../../config";
+import { FRAME_ID } from "../../config";
 import { allowedOrigin } from "../../lib/origin";
 import { getFrameHtml } from "../../lib/getFrameHtml";
 import { errorResponse } from "../../lib/responses";
