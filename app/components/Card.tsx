@@ -3,7 +3,7 @@ import { GameStatus } from "./Game/GameStatus";
 import { GameMessage } from "./Game/GameMessage";
 import React from "react";
 import { createGameCardData } from "../lib/createCardData";
-import { equipments, items } from "../data";
+import { equipments } from "../data";
 
 export function Card({
   message,
@@ -22,8 +22,8 @@ export function Card({
   gold?: number;
   hp?: number;
   maxhp?: number;
-  weapon?: string;
-  shield?: string;
+  weapon?: number;
+  shield?: number;
   enemyId?: number;
   equipmentId?: number;
   itemId?: number;

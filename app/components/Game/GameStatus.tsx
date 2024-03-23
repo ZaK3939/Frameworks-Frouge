@@ -5,8 +5,8 @@ interface GameStatusProps {
   gold: number;
   hp: number;
   maxhp: number;
-  weapon: string;
-  shield: string;
+  weapon: number;
+  shield: number;
 }
 
 export const GameStatus: React.FC<GameStatusProps> = ({
