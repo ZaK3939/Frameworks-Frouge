@@ -117,7 +117,25 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
     );
-    if (floor < 9) {
+    if (floor == 9) {
+      let nextActions = await getAllNextAction(fid);
+      await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "boss");
+      console.log("boss Actions", nextActions);
+      // Boss Battle
+      return new NextResponse(
+        getFrameHtml({
+          buttons: [
+            {
+              action: "tx",
+              label: "🗡️ Boss Battle",
+              target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+            },
+          ],
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+        }),
+      );
+    } else {
       let nextActions = await getAllNextAction(fid);
       console.log("normal battle", nextActions);
       // Normal Battle
@@ -146,26 +164,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?nextEnemy=${nextActions.enemyId}&nextEquipment=${nextActions.equipmentId}&nextItem=${nextActions.itemId}&floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
-    } else if (floor == 9) {
-      let nextActions = await getAllNextAction(fid);
-      await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "boss");
-      console.log("boss Actions", nextActions);
-      // Boss Battle
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [
-            {
-              action: "tx",
-              label: "🗡️ Boss Battle",
-              target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
-            },
-          ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
-        }),
-      );
-    } else {
-      return errorResponse();
     }
   } else return new NextResponse("Unauthorized", { status: 401 });
 }
