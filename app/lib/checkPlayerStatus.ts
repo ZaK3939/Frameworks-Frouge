@@ -3,7 +3,7 @@ import { Action, Player } from "./types";
 import { FROUGE_STAGE_ADDRESS } from "../config";
 import { base } from "viem/chains";
 
-const viemClientForBase = createPublicClient({
+export const viemClientForBase = createPublicClient({
   chain: base,
   // transport: http(),
   transport: http(`${process.env.BASE_RPC}`),
