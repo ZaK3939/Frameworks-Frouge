@@ -5,9 +5,14 @@ import { getFrameHtml } from "../../lib/getFrameHtml";
 import { getPlayerStageStatus } from "@/app/lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { FRAME_ID } from "@/app/config";
+import { enemies, equipments, items } from "@/app/data";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
+  const searchParams = req.nextUrl.searchParams;
+  const gold = searchParams.get("gold") ?? "";
+  const next = searchParams.get("next") ?? "";
+
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
   });
@@ -22,8 +27,27 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     const floor = Number(playerStageStatus.floor);
-    console.log("tx:playerStageStatus", playerStageStatus);
-
+    console.log("message", message.button);
+    let resultText = "";
+    let data;
+    if (message.button == 1) {
+      data = enemies[Number(next)];
+      resultText = `You defeat ${data.name} 👾`;
+    } else if (message.button == 2) {
+      data = equipments[Number(next)];
+      if (Number(gold) < Number(data.gold)) {
+        resultText = `Not enough gold 😢`;
+      } else {
+        resultText = `Purchased ${data.name} 🗡️`;
+      }
+    } else if (message.button == 3) {
+      data = items[Number(next)];
+      if (Number(gold) < Number(data.gold)) {
+        resultText = `Not enough gold 😢`;
+      } else {
+        resultText = `Healed ${data.recovery} ❤️`;
+      }
+    }
     await fdk.sendAnalytics(
       FRAME_ID,
       body as FrameActionPayload,
@@ -41,7 +65,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             target: `https://basescan.org/tx/${body?.untrustedData?.transactionId}`,
           },
         ],
-        post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?transactionId=${body?.untrustedData?.transactionId}`,
+        post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?transactionId=${body?.untrustedData?.transactionId}&resultText=${resultText}`,
         image: `${process.env.NEXT_PUBLIC_URL}/gif/que.gif`,
       }),
     );
