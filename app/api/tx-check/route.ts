@@ -14,7 +14,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (isValid && allowedOrigin(message)) {
     // TODO: Check the status of the transaction
     // https://viem.sh/docs/actions/public/getTransactionReceipt#gettransactionreceipt
-
+    console.log("Transaction ID", body?.untrustedData?.transactionId);
     return new NextResponse(
       getFrameHtml({
         buttons: [

@@ -44,7 +44,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "Player Revive",
               target: `${process.env.NEXT_PUBLIC_URL}/api/aftertx`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/first-action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
@@ -62,7 +62,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "Player Revive",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
@@ -110,7 +110,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrameHtml({
           buttons: [{ label: "🗡️ Boss Battle" }],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${playerStageStatus.floor}&gold=${gold}&hp=${playerStageStatus.hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
-          postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+          postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
         }),
       );
     } else {
