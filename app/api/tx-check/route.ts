@@ -48,10 +48,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         resultText = `Healed ${data.recovery} ❤️`;
       }
     }
+    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, Action);
     await fdk.sendAnalytics(
       FRAME_ID,
       body as FrameActionPayload,
-      floor.toString(),
+      `Action-${floor.toString()}`,
     );
     return new NextResponse(
       getFrameHtml({

@@ -28,7 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
-    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "action");
+    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "start");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     let floor = Number(playerStageStatus.floor);
@@ -51,7 +51,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `gameOver-${floor.toString()}`,
+          `GameOver:Floor${floor.toString()}F`,
         );
         return new NextResponse(
           getFrameHtml({
@@ -76,7 +76,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          "gameClear",
+          "GameClear",
         );
         // Game Clear
         return new NextResponse(

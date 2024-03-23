@@ -3,19 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseGwei } from "viem";
 import { stageAbi } from "../../lib/checkPlayerStatus";
 import { base } from "viem/chains";
-import { FROUGE_STAGE_ADDRESS } from "../../config";
+import { FRAME_ID, FROUGE_STAGE_ADDRESS } from "../../config";
 
 import { allowedOrigin } from "../../lib/origin";
 import { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { validButton } from "@/app/lib/buttonUtil";
+import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
   });
-
+  const fdk = new PinataFDK({
+    pinata_jwt: `${process.env.PINATA_JWT}`,
+    pinata_gateway: `${process.env.PINATA_GATEWAY}`,
+  });
   if (isValid && allowedOrigin(message) && validButton(message)) {
+    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "ReviveUser");
     const txData: FrameTransactionResponse = {
       chainId: `eip155:${base.id}`,
       method: "eth_sendTransaction",

@@ -6,7 +6,8 @@ import { errorResponse, verifiedAccounts } from "../../lib/responses";
 import { Hex, encodeFunctionData, parseEther } from "viem";
 import { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { base } from "viem/chains";
-import { FROUGE_NFT_ADDRESS } from "@/app/config";
+import { FRAME_ID, FROUGE_NFT_ADDRESS } from "@/app/config";
+import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 
 const nftAbi = [
   {
@@ -28,6 +29,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
+  });
+  const fdk = new PinataFDK({
+    pinata_jwt: `${process.env.PINATA_JWT}`,
+    pinata_gateway: `${process.env.PINATA_GATEWAY}`,
   });
   const searchParams = req.nextUrl.searchParams;
   const gold = searchParams.get("gold") ?? "";
@@ -57,6 +62,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
         };
         console.log("txData", txData);
+        await fdk.sendAnalytics(
+          FRAME_ID,
+          body as FrameActionPayload,
+          "NFT-MINT",
+        );
         return NextResponse.json(txData);
       } catch (e) {
         console.error(e);
