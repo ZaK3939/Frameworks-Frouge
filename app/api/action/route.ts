@@ -18,6 +18,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const transactionId = searchParams.get("transactionId") ?? "";
   const resultText = searchParams.get("resultText") ?? "";
   const gameStartAgain = searchParams.get("gameStartAgain") ?? "";
+  const init = searchParams.get("init") ?? "";
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -96,9 +97,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }
     }
 
+    // Go to LeaderBoard page
+    if (message?.button === 2 && init == "true") {
+      return new NextResponse(
+        getFrameHtml({
+          buttons: [{ label: `Home` }],
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
+          post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
+        }),
+      );
+    }
+
     // handling player gameover/gameclear lasttime Play
     if (gameStartAgain != "true" && floor != 0 && active == false) {
-      console.log("player is DEAD");
+      console.log("handling gameover/gameclear lasttime Play");
+      console.log("floor", floor);
       return new NextResponse(
         getFrameHtml({
           buttons: [
@@ -118,22 +131,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // start game
+    // show game status
     console.log(
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
     );
-
-    // Go to LeaderBoard page
-    if (message?.button === 2) {
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [{ label: `Home` }],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
-        }),
-      );
-    }
 
     // Boss Battle
     if (floor == 9) {
