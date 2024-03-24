@@ -21,7 +21,9 @@ export const airdropTo = async (recipient: `0x${string}`, id: number) => {
   try {
     const client = createWalletClient({
       chain: optimismSepolia,
-      transport: http(),
+      transport: process.env.BASE_RPC
+        ? http(`${process.env.BASE_RPC}`)
+        : http(),
     });
     const account = mnemonicToAccount(NFT_WALLET_MNEMONIC);
 
