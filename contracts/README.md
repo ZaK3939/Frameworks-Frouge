@@ -53,7 +53,13 @@ cost.
 Financial Transactions: Manages in-game financial transactions, such as fee collection and handling payments for revival
 or other in-game activities.
 
-## Deoloy
+## New Stage Setting
+
+If you want to create your own stage, please check this script.
+
+https://github.com/ZaK3939/Frameworks-Frouge/blob/main/contracts/script/DeployAndSetting.s.sol
+
+## Deploy
 
 For Stage Create And Deploy
 
