@@ -1,9 +1,45 @@
 import { NextRequest } from "next/server";
 import { ImageResponse } from "next/og";
 import { CARD_DIMENSIONS } from "../../../config";
-import { AllHolders } from "../../../../graphql/Mint";
+import { AllHolders, TokenBalance } from "../../../../graphql/Mint";
+import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+
+// Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
+async function getAddrByFid(fid: number) {
+  console.log("Extracting address for FID: ", fid);
+  const options = {
+    method: "GET",
+    url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
+    headers: {
+      accept: "application/json",
+      api_key: process.env.NEYNAR_API_KEY || "",
+    },
+  };
+  console.log("Fetching user address from Neynar API");
+  const resp = await fetch(options.url, { headers: options.headers });
+  console.log("Response: ", resp);
+  const responseBody = await resp.json(); // Parse the response body as JSON
+  if (responseBody.users && responseBody.users[0]) {
+    const userVerifications = responseBody.users[0].verifications;
+    if (userVerifications && userVerifications.length > 0) {
+      console.log("User address from Neynar API: ", userVerifications[0]);
+      return userVerifications[0].toString();
+    } else {
+      console.log("No verifications found for user.");
+      // Return a default or error value here
+      return null; // or handle this scenario appropriately
+    }
+  } else {
+    console.log("Could not fetch user address from Neynar API for FID: ", fid);
+    return "0x0000000000000000000000000000000000000000"; // Consider handling this scenario differently
+  }
+}
 
 export async function GET(req: NextRequest) {
+  const body: FrameRequest = await req.json();
+  const { isValid, message } = await getFrameMessage(body, {
+    neynarApiKey: process.env.NEYNAR_API_KEY,
+  });
   const options = {
     method: 'GET',
     headers: {
@@ -33,6 +69,16 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.log(err);
   }
+
+   // Get your token balance
+  let balance = 0;
+  if (isValid ) {
+    const fid = message.interactor.fid;
+    const addressFromFid = await getAddrByFid(fid);
+    const dataBalance = await TokenBalance(addressFromFid);
+    balance = dataBalance.Base.TokenBalance[0].amount;
+  }
+
 
   return new ImageResponse(
     (
@@ -64,10 +110,10 @@ export async function GET(req: NextRequest) {
         </div>
         <div tw="flex flex-col items-center bg-[#001D85] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
           <div tw="w-full flex justify-start items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">Your Rank</p>
+            <p tw="flex items-center justify-center h-2 m-0">Your clear sum</p>
           </div>
           <div tw="bg-[#031159] w-full flex justify-end items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">369</p>
+            <p tw="flex items-center justify-center h-2 m-0">{balance}</p>
           </div>
         </div>
       </div>
