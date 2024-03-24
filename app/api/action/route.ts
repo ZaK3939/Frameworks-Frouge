@@ -112,26 +112,35 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     if (gameStartAgain != "true" && floor != 0 && active == false) {
       console.log("handling gameover/gameclear lasttime Play");
       console.log("floor", floor);
-      return new NextResponse(
+      if (floor === 10) {
         getFrameHtml({
           buttons: [
             {
               label: "Game Start Again",
             },
-            {
-              action: "tx",
-              label: "Player Revive",
-              target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
-            },
           ],
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
-          image:
-            floor === 10
-              ? `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`
-              : `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
-        }),
-      );
+          image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
+        });
+      } else {
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                label: "Game Start Again",
+              },
+              {
+                action: "tx",
+                label: "Player Revive",
+                target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
+              },
+            ],
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
+          }),
+        );
+      }
     }
 
     // show game status
