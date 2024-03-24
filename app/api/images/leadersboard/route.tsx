@@ -1,15 +1,24 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 import { CARD_DIMENSIONS } from "../../../config";
-import { AllHolders } from "../../../../graphql/Mint";
+import { AllHolders, TokenBalance } from "../../../../graphql/Mint";
+import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+import { allowedOrigin } from "../../../lib/origin";
+import { validButton } from "@/app/lib/buttonUtil";
+
 
 export async function GET(req: NextRequest) {
+
   const options = {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${process.env.PINATA_JWT}`,
     }
   };
+
+  const searchParams = req.nextUrl.searchParams;
+  const address = searchParams.get("address") ?? "0x00";
+  console.log("address=", address);
 
   // Get action sum
   let action = 0;
@@ -33,6 +42,17 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.log(err);
   }
+
+   // Get your token balance
+  let balance = 0;
+  if (address !== "0x00") {
+    const dataBalance = await TokenBalance(address);
+    if (dataBalance.Base && dataBalance.Base.TokenBalance && dataBalance.Base.TokenBalance.length > 0) {
+      balance = dataBalance.Base.TokenBalance[0].amount;
+    }
+  }
+  
+
 
   return new ImageResponse(
     (
@@ -64,10 +84,10 @@ export async function GET(req: NextRequest) {
         </div>
         <div tw="flex flex-col items-center bg-[#001D85] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
           <div tw="w-full flex justify-start items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">Your Rank</p>
+            <p tw="flex items-center justify-center h-2 m-0">Your clear sum</p>
           </div>
           <div tw="bg-[#031159] w-full flex justify-end items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">369</p>
+            <p tw="flex items-center justify-center h-2 m-0">{balance}</p>
           </div>
         </div>
       </div>
