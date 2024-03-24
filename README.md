@@ -96,7 +96,9 @@ All the backgrounds and game characters for our games were created by OpenAI. We
 
 ## Others
 Play here: [https://warpcast.com/zak3939/0x610d2a4b](https://warpcast.com/zak3939/0x610d2a4b)
+
 Hosting site: [https://frameworks-frogue.vercel.app/](https://frameworks-frogue.vercel.app/)
+
 Reference:
 Our game idea was sparked by a great casual game. We would like to thank all the great game makers.
 https://twitter.com/GameTsukuruKun/status/1682324411687505920?s=20
