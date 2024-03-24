@@ -144,10 +144,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "🗡️ Boss Battle",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.enemyId}`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?next=${nextActions.enemyId}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {

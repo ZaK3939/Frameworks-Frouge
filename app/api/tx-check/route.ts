@@ -24,9 +24,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (isValid && allowedOrigin(message)) {
     // TODO: Check the status of the transaction
     // https://viem.sh/docs/actions/public/getTransactionReceipt#gettransactionreceipt
-    const fid = message.interactor.fid;
-    const playerStageStatus = await getPlayerStageStatus(fid);
-    const floor = Number(playerStageStatus.floor);
     let resultText = "";
     let data;
     console.log("next", next, "message", message.button);
@@ -37,14 +34,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       } else if (message.button == 2) {
         data = equipments[Number(next)];
         if (Number(gold) < Number(data.gold)) {
-          resultText = `Not enough gold 😢`;
+          resultText = `Not enough Gold 😢`;
         } else {
           resultText = `Purchased ${data.name} 🗡️`;
         }
       } else if (message.button == 3) {
         data = items[Number(next)];
         if (Number(gold) < Number(data.gold)) {
-          resultText = `Not enough gold 😢`;
+          resultText = `Not enough Gold 😢`;
         } else {
           resultText = `Healed ${data.recovery} ❤️`;
         }
@@ -54,6 +51,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
     console.log("resultText", resultText);
 
+    const fid = message.interactor.fid;
+    const playerStageStatus = await getPlayerStageStatus(fid);
+    const floor = Number(playerStageStatus.floor);
     await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "Action");
     await fdk.sendAnalytics(
       FRAME_ID,
