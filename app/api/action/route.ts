@@ -116,13 +116,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("floor", floor);
       console.log(floor == 10);
       if (floor == 10) {
+        console.log("Game Clear user play again");
         getFrameHtml({
           buttons: [
             {
               label: "Game Start Again",
             },
           ],
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
+          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
           image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
         });
       } else {
@@ -139,7 +140,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                 postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
               },
             ],
-            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
             image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
           }),
         );
