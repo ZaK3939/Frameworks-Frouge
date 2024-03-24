@@ -3,7 +3,7 @@ import { mnemonicToAccount } from "viem/accounts";
 import { optimismSepolia } from "viem/chains";
 
 const NFT_WALLET_MNEMONIC = process.env.NFT_WALLET_MNEMONIC as string;
-const NFT_CONTRACT_ADDRESS = process.env
+const PRIVY_COLLECTION_NFT_ADDRESS = process.env
   .PRIVY_COLLECTION_NFT_ADDRESS as `0x${string}`; // Optimism Sepolia Testnet
 
 const MINT_ABI = {
@@ -25,10 +25,15 @@ export const airdropTo = async (recipient: `0x${string}`, id: number) => {
     });
     const account = mnemonicToAccount(NFT_WALLET_MNEMONIC);
 
-    console.log("Minting NFT for", recipient, "with ID", id);
+    console.log(
+      `Minting NFT (${PRIVY_COLLECTION_NFT_ADDRESS}) for`,
+      recipient,
+      "with ID",
+      id,
+    );
     const tx = await client.sendTransaction({
       account: account,
-      to: NFT_CONTRACT_ADDRESS,
+      to: PRIVY_COLLECTION_NFT_ADDRESS,
       data: encodeFunctionData({
         abi: [MINT_ABI],
         functionName: "mint",
