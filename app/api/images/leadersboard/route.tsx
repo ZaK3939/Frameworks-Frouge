@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
         <div tw="flex justify-center w-full mb-2 gap-10">
           <div tw="flex flex-col items-center bg-[#FF0000] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center mr-4"> 
             <div tw="w-full flex justify-start items-end p-1">
-              <p tw="flex items-center justify-center h-2 m-0">All Players</p>
+              <p tw="flex items-center justify-center h-2 m-0">All action sum</p>
             </div>
             <div tw="bg-[#7D0202] w-full flex justify-end items-end p-1">
               <p tw="flex items-center justify-center h-2 m-0">{action}</p>
