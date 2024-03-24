@@ -1,8 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 import { CARD_DIMENSIONS } from "../../../config";
 import { AllHolders, TokenBalance } from "../../../../graphql/Mint";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+import { allowedOrigin } from "../../../lib/origin";
+import { validButton } from "@/app/lib/buttonUtil";
 
 type FidResponse = {
   verifications: string[];
@@ -28,13 +30,20 @@ type FidResponse = {
 
 export async function GET(req: NextRequest) {
   const body: FrameRequest = await req.json();
-  const { isValid, message } = await getFrameMessage(body);
+  const { isValid, message } = await getFrameMessage(body, {
+    neynarApiKey: process.env.NEYNAR_API_KEY,
+  });
   const options = {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${process.env.PINATA_JWT}`,
     }
   };
+
+  if (isValid && allowedOrigin(message) && validButton(message)) {
+    const fid = message.interactor.fid;
+    // const addressFromFid = await getAddrByFid(fid);
+    } else return new NextResponse("Unauthorized", { status: 401 });
 
   // Get action sum
   let action = 0;
