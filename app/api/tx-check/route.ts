@@ -12,7 +12,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const searchParams = req.nextUrl.searchParams;
   const gold = searchParams.get("gold") ?? "";
   const next = searchParams.get("next") ?? "";
-
+  const revive = searchParams.get("revive") ?? "";
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
   });
@@ -26,7 +26,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     // https://viem.sh/docs/actions/public/getTransactionReceipt#gettransactionreceipt
     let resultText = "";
     let data;
-    console.log("next", next, "message", message.button);
     try {
       if (message.button == 1) {
         data = enemies[Number(next)];
@@ -49,17 +48,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } catch {
       resultText = `Invalid something 😢`;
     }
-    console.log("resultText", resultText);
 
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     const floor = Number(playerStageStatus.floor);
-    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "Action");
-    await fdk.sendAnalytics(
-      FRAME_ID,
-      body as FrameActionPayload,
-      `Action-${floor.toString()}`,
-    );
+    if (!revive) {
+      await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "Action");
+      await fdk.sendAnalytics(
+        FRAME_ID,
+        body as FrameActionPayload,
+        `Action-${floor.toString()}`,
+      );
+    }
     return new NextResponse(
       getFrameHtml({
         buttons: [

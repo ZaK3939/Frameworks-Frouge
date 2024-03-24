@@ -53,6 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           body as FrameActionPayload,
           `GameOver:Floor${floor.toString()}F`,
         );
+        console.log("player is DEAD");
         return new NextResponse(
           getFrameHtml({
             buttons: [
@@ -63,7 +64,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                 action: "tx",
                 label: "Player Revive",
                 target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
               },
             ],
             post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
@@ -107,7 +108,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "Player Revive",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
             },
           ],
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
@@ -147,7 +148,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.enemyId}`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?resultText=${resultText}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {

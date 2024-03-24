@@ -98,7 +98,7 @@ contract TestStageFactory is Settings {
         IStage(stage).gameAction(1, 0);
         assertEq(IStage(stage).getUserFloor(1), 10); //game clear
         assertEq(IStage(stage).playerStageStatus(1).active, false, "player should be inactive");
-        assertEq(IStage(stage).playerStageStatus(1).gold, 0);
+        assertEq(IStage(stage).playerStageStatus(1).gold, 40);
         assertEq(IStage(stage).gameClear(1), true);
     }
 }
