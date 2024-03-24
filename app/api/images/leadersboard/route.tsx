@@ -6,27 +6,6 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { allowedOrigin } from "../../../lib/origin";
 import { validButton } from "@/app/lib/buttonUtil";
 
-type FidResponse = {
-  verifications: string[];
-};
-
-// Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
-async function getAddrByFid(fid: number) {
-  const options = {
-    method: 'GET',
-    url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
-    headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || "" },
-  };
-  const resp = await fetch(options.url, { headers: options.headers });
-  const responseBody = await resp.json(); // Parse the response body as JSON
-  if (responseBody.users) {
-    const userVerifications = responseBody.users[0] as FidResponse;
-    if (userVerifications.verifications) {
-      return userVerifications.verifications[0];
-    }
-  }
-  return '0x00';
-}
 
 export async function GET(req: NextRequest) {
 
@@ -38,8 +17,8 @@ export async function GET(req: NextRequest) {
   };
 
   const searchParams = req.nextUrl.searchParams;
-  const fid = searchParams.get("fid") ?? "";
-  console.log("fid=", fid);
+  const address = searchParams.get("address") ?? "0x00";
+  console.log("address=", address);
 
   // Get action sum
   let action = 0;
@@ -66,9 +45,11 @@ export async function GET(req: NextRequest) {
 
    // Get your token balance
   let balance = 0;
-  const addressFromFid = await getAddrByFid(parseInt(fid));
-  const dataBalance = await TokenBalance(addressFromFid);
-  balance = dataBalance.Base.TokenBalance[0].amount;
+  if (address !== "0x00") {
+    const dataBalance = await TokenBalance(address);
+    balance = dataBalance.Base.TokenBalance[0].amount;
+  }
+  
 
 
   return new ImageResponse(
