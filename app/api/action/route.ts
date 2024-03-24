@@ -117,16 +117,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log(floor == 10);
       if (floor == 10) {
         console.log("Game Clear user play again");
-        getFrameHtml({
-          buttons: [
-            {
-              label: "Game Start Again",
-            },
-          ],
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
-          image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
-        });
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                label: "Game Start Again",
+              },
+            ],
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
+          }),
+        );
       } else {
+        console.log("Game Over user play again");
         return new NextResponse(
           getFrameHtml({
             buttons: [
