@@ -27,10 +27,8 @@ type FidResponse = {
 // }
 
 export async function GET(req: NextRequest) {
-  // const body: FrameRequest = await req.json();
-  // const { isValid, message } = await getFrameMessage(body, {
-  //   neynarApiKey: process.env.NEYNAR_API_KEY,
-  // });
+  const body: FrameRequest = await req.json();
+  const { isValid, message } = await getFrameMessage(body);
   const options = {
     method: 'GET',
     headers: {
