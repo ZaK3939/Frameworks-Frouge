@@ -1,5 +1,6 @@
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata } from "next";
+import { FrameActionPayload } from "pinata-fdk";
 
 export async function generateMetadata(): Promise<Metadata> {
   const frameMetadata = getFrameMetadata({
@@ -7,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
       {
         label: "Game Start",
       },
-      { 
+      {
         label: "Leaderboard",
       },
     ],

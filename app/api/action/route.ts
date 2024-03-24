@@ -28,7 +28,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
-    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "start");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     let floor = Number(playerStageStatus.floor);
@@ -58,7 +57,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `GameOver:${floor}F`,
+          "GameOver",
         );
         console.log("player is DEAD: game again");
         return new NextResponse(
@@ -130,6 +129,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       `player hp ${hp} is alive floor ${floor}, decide Action`,
       active,
     );
+
     // Go to LeaderBoard page
     if (message?.button === 2) {
       return new NextResponse(
@@ -140,6 +140,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }),
       );
     }
+
     // Boss Battle
     if (floor == 9) {
       let nextActions = await getAllNextAction(fid);
@@ -164,6 +165,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       if (gameStartAgain == "true") {
         floor = 0;
         gold = 0;
+        await fdk.sendAnalytics(
+          FRAME_ID,
+          body as FrameActionPayload,
+          "startGameAgain",
+        );
       }
       let nextActions = await getAllNextAction(fid);
       console.log("normal battle", nextActions);
