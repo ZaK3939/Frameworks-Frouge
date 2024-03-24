@@ -27,27 +27,33 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     const floor = Number(playerStageStatus.floor);
-    console.log("message", message.button);
     let resultText = "";
     let data;
-    if (message.button == 1) {
-      data = enemies[Number(next)];
-      resultText = `You defeat ${data.name} 👾`;
-    } else if (message.button == 2) {
-      data = equipments[Number(next)];
-      if (Number(gold) < Number(data.gold)) {
-        resultText = `Not enough gold 😢`;
-      } else {
-        resultText = `Purchased ${data.name} 🗡️`;
+    console.log("next", next, "message", message.button);
+    try {
+      if (message.button == 1) {
+        data = enemies[Number(next)];
+        resultText = `You defeat ${data.name} 👾`;
+      } else if (message.button == 2) {
+        data = equipments[Number(next)];
+        if (Number(gold) < Number(data.gold)) {
+          resultText = `Not enough gold 😢`;
+        } else {
+          resultText = `Purchased ${data.name} 🗡️`;
+        }
+      } else if (message.button == 3) {
+        data = items[Number(next)];
+        if (Number(gold) < Number(data.gold)) {
+          resultText = `Not enough gold 😢`;
+        } else {
+          resultText = `Healed ${data.recovery} ❤️`;
+        }
       }
-    } else if (message.button == 3) {
-      data = items[Number(next)];
-      if (Number(gold) < Number(data.gold)) {
-        resultText = `Not enough gold 😢`;
-      } else {
-        resultText = `Healed ${data.recovery} ❤️`;
-      }
+    } catch {
+      resultText = `Invalid something 😢`;
     }
+    console.log("resultText", resultText);
+
     await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "Action");
     await fdk.sendAnalytics(
       FRAME_ID,

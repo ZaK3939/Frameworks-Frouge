@@ -147,7 +147,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?next=${nextActions.enemyId}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {
