@@ -72,12 +72,12 @@ export async function GET(req: NextRequest) {
 
    // Get your token balance
   let balance = 0;
-  if (isValid ) {
-    const fid = message.interactor.fid;
-    const addressFromFid = await getAddrByFid(fid);
-    const dataBalance = await TokenBalance(addressFromFid);
-    balance = dataBalance.Base.TokenBalance[0].amount;
-  }
+  // if (isValid ) {
+  //   const fid = message.interactor.fid;
+  //   const addressFromFid = await getAddrByFid(fid);
+  //   const dataBalance = await TokenBalance(addressFromFid);
+  //   balance = dataBalance.Base.TokenBalance[0].amount;
+  // }
 
 
   return new ImageResponse(
