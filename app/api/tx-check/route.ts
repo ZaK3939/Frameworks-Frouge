@@ -64,6 +64,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
 
       if (tokenId) {
+        // privy NFT Airdrop to the player.
         const tx = await airdropToPrivy(fid, tokenId);
         if (tx) {
           console.log("drop NFT tx", tx);
