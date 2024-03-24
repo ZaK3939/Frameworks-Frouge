@@ -15,3 +15,5 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }),
   );
 }
+
+export const dynamic = "force-dynamic";
