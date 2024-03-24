@@ -126,7 +126,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       return new NextResponse(
         getFrameHtml({
           buttons: [{ label: `Home` }],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}&fid=${fid}`,
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
         }),
       );
