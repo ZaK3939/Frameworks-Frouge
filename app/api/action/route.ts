@@ -19,9 +19,12 @@ type FidResponse = {
 // Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
 async function getAddrByFid(fid: number) {
   const options = {
-    method: 'GET',
+    method: "GET",
     url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
-    headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || "" },
+    headers: {
+      accept: "application/json",
+      api_key: process.env.NEYNAR_API_KEY || "",
+    },
   };
   const resp = await fetch(options.url, { headers: options.headers });
   const responseBody = await resp.json(); // Parse the response body as JSON
@@ -31,7 +34,7 @@ async function getAddrByFid(fid: number) {
       return userVerifications.verifications[0];
     }
   }
-  return '0x00';
+  return "0x00";
 }
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -50,6 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
+    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "action");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     let floor = Number(playerStageStatus.floor);
