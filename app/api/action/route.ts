@@ -46,14 +46,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       });
       console.log("transaction", transaction);
       // Revive Player except gameClaer
-      console.log("player revive", active, floor);
+      console.log(
+        "player revive",
+        active,
+        floor,
+        floor.toString(),
+        active == false && floor != 10,
+      );
       if (active == false && floor != 10) {
+        console.log("player is DEAD");
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `GameOver:Floor${floor.toString()}F`,
+          `GameOver:${floor}F`,
         );
-        console.log("player is DEAD");
+        console.log("player is DEAD: game again");
         return new NextResponse(
           getFrameHtml({
             buttons: [
@@ -95,6 +102,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         );
       }
     }
+
     // handling player gameover/gameclear lasttime Play
     if (gameStartAgain != "true" && floor != 0 && active == false) {
       console.log("player is DEAD");
