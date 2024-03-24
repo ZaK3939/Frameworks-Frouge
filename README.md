@@ -62,6 +62,7 @@ The Leader Board we implemented also utilises the Frames Analytics api to displa
 **◎Airstack** 
 
 By utilising Airstack, it was possible to visualise the number of NFT holders who had cleared games issued on Base and how many games they had cleared themselves via fid.
+
 <img width="547" alt="Screenshot 2024-03-24 at 15 39 57" src="https://github.com/libdefi/Frameworks-Frouge/assets/8872443/5e7f290d-cf15-4e6e-b723-b7dc86ffe45d">
 
 
