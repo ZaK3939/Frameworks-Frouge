@@ -47,7 +47,9 @@ export async function GET(req: NextRequest) {
   let balance = 0;
   if (address !== "0x00") {
     const dataBalance = await TokenBalance(address);
-    balance = dataBalance.Base.TokenBalance[0].amount;
+    if (dataBalance.Base && dataBalance.Base.TokenBalance && dataBalance.Base.TokenBalance.length > 0) {
+      balance = dataBalance.Base.TokenBalance[0].amount;
+    }
   }
   
 
