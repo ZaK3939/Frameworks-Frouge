@@ -13,4 +13,4 @@ export const CARD_DIMENSIONS = {
 // Base
 export const CHAIN_ID = base.id;
 
-export const FRAME_ID = "frogue";
+export const FRAME_ID = "frameworks-frogue";

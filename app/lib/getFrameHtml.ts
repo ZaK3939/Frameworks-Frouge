@@ -4,9 +4,9 @@ export function getFrameHtml(frameMetadata: FrameMetadataType) {
   const html = getFrameHtmlResponse(frameMetadata);
 
   const extraTags = [
-    '<meta property="og:title" content="Frouge">',
-    '<meta property="og:description" content="Frouge on-chain-gamme">',
-    '<meta property="og:image" content="https://mint.farcaster.xyz/background-images/01_start.png">',
+    '<meta property="og:title" content="Frogue">',
+    '<meta property="og:description" content="Frogue on-chain-gamme">',
+    '<meta property="og:image" content="https://frameworks-frogue.vercel.app/background-images/01_start.png">',
     '<meta property="fc:frame:image:aspect_ratio" content="1.91:1" />',
   ];
   // hack: remove close tags, add aspect ratio and required OG tags

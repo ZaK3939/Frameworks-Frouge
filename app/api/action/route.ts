@@ -28,7 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
-    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "action");
+    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "start");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     let floor = Number(playerStageStatus.floor);
@@ -51,7 +51,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `gameOver-${floor.toString()}`,
+          `GameOver:Floor${floor.toString()}F`,
         );
         return new NextResponse(
           getFrameHtml({
@@ -76,7 +76,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          "gameClear",
+          "GameClear",
         );
         // Game Clear
         return new NextResponse(
@@ -144,7 +144,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               action: "tx",
               label: "🗡️ Boss Battle",
               target: `${process.env.NEXT_PUBLIC_URL}/api/after-action`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.enemyId}`,
             },
           ],
           image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
