@@ -3,6 +3,7 @@
 # Frogue - Fully onchain rogue game
 
 ## Summary
+
 Frogue is Farcaster's first fully onchain rogue RPG game to be played on farcaster frames. Can you defeat the boss?
 
 ## Feature
@@ -11,10 +12,9 @@ Frogue is Farcaster's first fully onchain rogue RPG game to be played on farcast
 - Moreover, for those who are interested in customization, our Stage Factory contract allows the creation of new stages with unique enemies, items, and equipment, offering endless possibilities for personalization and expansion.
 - We're also committed to sustainable game development. A portion of the gas fees can be redirected either back to the players or to charitable organizations, creating a more community-focused and socially responsible gaming experience. This innovative approach not only enhances gameplay but also contributes positively to the broader community, setting a new standard for the future of game development.
 
-
 ## Architecture
-![Cursor_と_Excalidraw](https://github.com/libdefi/Frameworks-Frouge/assets/8872443/b7cecb5a-2806-4337-ae89-1e2747d15138)
 
+![Cursor_と_Excalidraw](https://github.com/libdefi/Frameworks-Frouge/assets/8872443/b7cecb5a-2806-4337-ae89-1e2747d15138)
 
 **[User Flow] Very simple!!**
 
@@ -25,7 +25,6 @@ Frogue is Farcaster's first fully onchain rogue RPG game to be played on farcast
 5. Mint your winner NFT
 
 If you experience a game over, you have the option to revive by paying a gas fee.
-
 
 ## Tech stack
 
@@ -39,15 +38,15 @@ Our Farcaster frame didn’t built without Naynar. We were able to create a more
 
 Their tools are essential to develop the game once we have identified ourselves on Warpcast, such as getting the fid and the wallet address that is connected to the fid.
 
-### **◎XMTP** 
+### **◎XMTP**
 
 Our product is fully compliant with the Open Frames Standard. We have successfully made our Frame interoperable with the standard, ensuring compatibility with a broader range of applications and protocols.
 
-### **◎Privy** 
+### **◎Privy**
 
 In our game, an embedded wallet from Privy is created for each player. As you progress through various stages, every action you choose results in an NFT being dropped into this wallet. These NFTs are unique in that they not only record the number of actions you've taken, but they also play a crucial role in the gameplay. They can be used as equipment or to enhance your player's abilities in subsequent stages. This integration of NFTs brings a new level of interactivity and personalization to the gaming experience, as your collection of NFTs directly reflects your choices and achievements in the game.
 
-### **◎Pinata** 
+### **◎Pinata**
 
 We were able to utilise Pinata to get a granular view of user actions with Frames Analytics. This allowed us to visualise at which stage they left/were defeated and how many times they made it to the Boss stage.
 
@@ -57,23 +56,18 @@ The Leader Board we implemented also utilises the Frames Analytics api to displa
 
 <img width="578" alt="Screenshot 2024-03-24 at 15 36 39" src="https://github.com/libdefi/Frameworks-Frouge/assets/8872443/bcbc4258-f0f9-40f8-8fab-56d38c20bcf2">
 
-
-
-**◎Airstack** 
+**◎Airstack**
 
 By utilising Airstack, it was possible to visualise the number of NFT holders who had cleared games issued on Base and how many games they had cleared themselves via fid.
 
 <img width="547" alt="Screenshot 2024-03-24 at 15 39 57" src="https://github.com/libdefi/Frameworks-Frouge/assets/8872443/5e7f290d-cf15-4e6e-b723-b7dc86ffe45d">
 
-
-
 **◎Open AI**
 
 All the backgrounds and game characters for our games were created by OpenAI. We would like to thank them for their great technology.
 
-
-
 ## Future Work
+
 - Consider game design (more courses, more difficult games)
 - Improve UX using AA etc. (because it is frustrating on smartphones if all transactions are made from Wallet)
 - Collaboration with NFT IPs (e.g. Nouns DAO)
@@ -83,22 +77,30 @@ All the backgrounds and game characters for our games were created by OpenAI. We
 
 **Base**
 
-| contract | contract address |
-| --- | --- |
+| contract   | contract address                                                        |
+| ---------- | ----------------------------------------------------------------------- |
 | Game Stage | https://basescan.org/address/0xb7bF3a3a5a80A62680da65c545f74A47A2CB373E |
-| NFT | https://basescan.org/address/0x250ABA37496C5dFb2AE3D75176f98c9cbB0394E3 |
+| NFT        | https://basescan.org/address/0x250ABA37496C5dFb2AE3D75176f98c9cbB0394E3 |
 
 **Optimism Testnet**
 
-| contract | contract address |
-| --- | --- |
+| contract         | contract address                                                                         |
+| ---------------- | ---------------------------------------------------------------------------------------- |
 | Privy Collection | https://sepolia-optimism.etherscan.io/address/0x10c968CA46Cea35b94D752f5654219B5254cDE4a |
 
 ## Others
+
 Play here: [https://warpcast.com/zak3939/0x610d2a4b](https://warpcast.com/zak3939/0x610d2a4b)
 
 Hosting site: [https://frameworks-frogue.vercel.app/](https://frameworks-frogue.vercel.app/)
 
-Reference:
-Our game idea was sparked by a great casual game. We would like to thank all the great game makers.
-https://twitter.com/GameTsukuruKun/status/1682324411687505920?s=20
+## Acknowledgement
+
+- Our game idea was sparked by a great casual game. We would like to thank all the great game makers.
+  https://twitter.com/GameTsukuruKun/status/1682324411687505920?s=20
+- This code repository start from git clone https://github.com/privy-io/privy-frames-demo
+- https://github.com/syun77/OneWayRPG
+- https://store.steampowered.com/app/1581950/Buriedbornes2__Dungeon_RPG/
+- https://www.pinata.cloud/blog/how-to-build-a-transaction-frame-on-farcaster
+- https://github.com/Zizzamia/a-frame-in-100-lines
+- https://github.com/PaulRBerg/foundry-template
