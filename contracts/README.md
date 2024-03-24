@@ -23,7 +23,7 @@ forge script script/Setting.s.sol:Setting --rpc-url syndicate --broadcast --veri
 forge script script/DeployAndSetting.s.sol:DeployAndSetting --rpc-url base --broadcast --verify --legacy --ffi
 ```
 
-forge script script/DeployNFTAndSet.s.sol:DeployNFTAndSet --rpc-url op_sepolia --broadcast --verify --legacy --ffi
+forge script script/DeployNFTAndSet.s.sol:DeployNFTAndSet --rpc-url optimism-sepolia --broadcast --verify --legacy --ffi
 
 ## License
 

@@ -5,7 +5,8 @@ import { getFrameHtml } from "../../lib/getFrameHtml";
 import { getPlayerStageStatus } from "@/app/lib/checkPlayerStatus";
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { FRAME_ID } from "@/app/config";
-import { enemies, equipments, items } from "@/app/data";
+import { enemies, equipments, getCategoryMapping, items } from "@/app/data";
+import { airdropToPrivy } from "@/app/lib/createPrivyNFYAirdrop";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
@@ -26,6 +27,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     // https://viem.sh/docs/actions/public/getTransactionReceipt#gettransactionreceipt
     let resultText = "";
     let data;
+    let tokenId;
     try {
       if (message.button == 1) {
         data = enemies[Number(next)];
@@ -45,6 +47,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           resultText = `Healed ${data.recovery} ❤️`;
         }
       }
+      tokenId = getCategoryMapping(message.button, Number(next));
     } catch {
       resultText = `Invalid something 😢`;
     }
@@ -59,6 +62,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         body as FrameActionPayload,
         `Action-${floor.toString()}`,
       );
+
+      if (tokenId) {
+        const tx = await airdropToPrivy(fid, tokenId);
+        if (tx) {
+          console.log("drop NFT tx", tx);
+        }
+      }
     }
     return new NextResponse(
       getFrameHtml({

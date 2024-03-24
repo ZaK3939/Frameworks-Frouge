@@ -40,3 +40,36 @@ export const items: Record<number, Item> = {
   2: { name: "steak", recovery: 10, gold: 10 },
   3: { name: "restorative", recovery: 15, gold: 15 },
 };
+
+export function getCategoryMapping(category: number, number: number): number {
+  const enemyMapping: Record<number, number> = {
+    101: 1, // "slime"
+    102: 2, // "rat"
+    103: 3, // "green_slime"
+    104: 4, // "red_vat"
+    105: 5, // "king_frog"
+  };
+
+  const equipmentMapping: Record<number, number> = {
+    1: 6, // "stick"
+    2: 7, // "sling_shot"
+    3: 8, // "shield"
+  };
+
+  const itemMapping: Record<number, number> = {
+    1: 9, // "apple"
+    2: 10, // "steak"
+    3: 11, // "restorative"
+  };
+
+  switch (category) {
+    case 1:
+      return enemyMapping[number] ?? 0;
+    case 2:
+      return equipmentMapping[number] ?? 0;
+    case 3:
+      return itemMapping[number] ?? 0;
+    default:
+      return 0;
+  }
+}
