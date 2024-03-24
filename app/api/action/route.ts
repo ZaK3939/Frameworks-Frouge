@@ -114,7 +114,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     if (gameStartAgain != "true" && floor != 0 && active == false) {
       console.log("handling gameover/gameclear lasttime Play");
       console.log("floor", floor);
-      if (floor === 10) {
+      console.log(floor == 10);
+      if (floor == 10) {
         getFrameHtml({
           buttons: [
             {
