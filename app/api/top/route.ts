@@ -7,15 +7,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(
     getFrameHtml({
       buttons: [
-        { 
+        {
           label: "Game Start",
         },
-        { 
+        {
           label: "Leaderboard",
         },
       ],
       image: `${process.env.NEXT_PUBLIC_URL}/background-images/01_start.png`, // Only image
-      postUrl: `${process.env.NEXT_PUBLIC_URL}/api/first-action`,
+      postUrl: `${process.env.NEXT_PUBLIC_URL}/api/action`,
     }),
   );
 }

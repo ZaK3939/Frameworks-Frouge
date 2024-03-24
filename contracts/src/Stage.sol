@@ -286,11 +286,6 @@ contract Stage is Ownable, IStage {
 
             status[playerId_].hp = resultHp;
             status[playerId_].gold += enemyContract.status(enemyId).gold;
-            if (status[playerId_].hp == 0) {
-                _gameOver(playerId_);
-            } else {
-                status[playerId_].floor++;
-            }
 
             emit BattleResult(playerId_, enemyId, resultHp, status[playerId_].hp, status[playerId_].gold);
         } else if (option_ == 1) {
@@ -325,7 +320,6 @@ contract Stage is Ownable, IStage {
                     status[playerId_].defense
                 );
             }
-            status[playerId_].floor++;
         } else if (option_ == 2) {
             uint256 random = randomNumber_ % floorItem[status[playerId_].floor].length;
             uint256 itemId = floorItem[status[playerId_].floor][random];
@@ -351,13 +345,19 @@ contract Stage is Ownable, IStage {
             if (status[playerId_].hp > Constants.playerHP) {
                 status[playerId_].hp = Constants.playerHP;
             }
-            status[playerId_].floor++;
             emit RestResult(playerId_, itemId, status[playerId_].hp, status[playerId_].gold);
         } else {
             // revert INVALID_ACTION();
             skipped = true;
         }
+
         emit ActionEnd(playerId_, option_, status[playerId_].floor, skipped);
+
+        if (status[playerId_].hp == 0) {
+            _gameOver(playerId_);
+        } else {
+            status[playerId_].floor++;
+        }
     }
     /*//////////////////////////////////////////////////////////////
                                 DEFAULTS

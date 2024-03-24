@@ -19,6 +19,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     pinata_jwt: `${process.env.PINATA_JWT}`,
     pinata_gateway: `${process.env.PINATA_GATEWAY}`,
   });
+  console.log("tring to revive", message);
   if (isValid && allowedOrigin(message) && validButton(message)) {
     await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "ReviveUser");
     const txData: FrameTransactionResponse = {

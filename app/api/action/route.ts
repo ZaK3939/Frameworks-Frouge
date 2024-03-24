@@ -50,7 +50,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   });
 
   if (isValid && allowedOrigin(message) && validButton(message)) {
-    await fdk.sendAnalytics(FRAME_ID, body as FrameActionPayload, "start");
     const fid = message.interactor.fid;
     const playerStageStatus = await getPlayerStageStatus(fid);
     let floor = Number(playerStageStatus.floor);
@@ -70,11 +69,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       // Revive Player except gameClaer
       console.log("player revive", active, floor);
       if (active == false && floor != 10) {
+        console.log("player is DEAD");
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,
-          `GameOver:Floor${floor.toString()}F`,
+          "GameOver",
         );
+        console.log("player is DEAD: game again");
         return new NextResponse(
           getFrameHtml({
             buttons: [
@@ -85,7 +86,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                 action: "tx",
                 label: "Player Revive",
                 target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
               },
             ],
             post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
@@ -116,36 +117,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         );
       }
     }
-    // handling player gameover/gameclear lasttime Play
-    if (gameStartAgain != "true" && floor != 0 && active == false) {
-      console.log("player is DEAD");
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [
-            {
-              label: "Game Start Again",
-            },
-            {
-              action: "tx",
-              label: "Player Revive",
-              target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
-              postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check`,
-            },
-          ],
-          post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
-          image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
-        }),
-      );
-    }
 
-    // start game
-    console.log(
-      `player hp ${hp} is alive floor ${floor}, decide Action`,
-      active,
-    );
     // Go to LeaderBoard page
     if (message?.button === 2) {
       const address = await getAddrByFid(fid);
+      console.log("Go to LeaderBoard page");
+
       return new NextResponse(
         getFrameHtml({
           buttons: [{ label: `Home` }],
@@ -154,6 +131,51 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }),
       );
     }
+
+    // handling player gameover/gameclear lasttime Play
+    if (gameStartAgain != "true" && floor != 0 && active == false) {
+      console.log("handling gameover/gameclear lasttime Play");
+      if (floor == 10) {
+        console.log("Game Clear user play again");
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                label: "Game Start Again",
+              },
+            ],
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`,
+          }),
+        );
+      } else {
+        console.log("Game Over user play again");
+        return new NextResponse(
+          getFrameHtml({
+            buttons: [
+              {
+                label: "Game Start Again",
+              },
+              {
+                action: "tx",
+                label: "Player Revive",
+                target: `${process.env.NEXT_PUBLIC_URL}/api/after-revive`,
+                postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?revive=true`,
+              },
+            ],
+            post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true&random=${randomValue}`,
+            image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
+          }),
+        );
+      }
+    }
+
+    // show game status
+    console.log(
+      `player hp ${hp} is alive floor ${floor}, decide Action`,
+      active,
+    );
+
     // Boss Battle
     if (floor == 9) {
       let nextActions = await getAllNextAction(fid);
@@ -170,7 +192,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
               postUrl: `${process.env.NEXT_PUBLIC_URL}/api/tx-check?next=${nextActions.enemyId}`,
             },
           ],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/action-status?resultText=${resultText}&floor=${floor}&gold=${gold}&hp=${hp}&attack=${playerStageStatus.attack}&defense=${playerStageStatus.defense}&weapon=${weapon}&shield=${shield}&random=${randomValue}`,
         }),
       );
     } else {
@@ -178,6 +200,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       if (gameStartAgain == "true") {
         floor = 0;
         gold = 0;
+        await fdk.sendAnalytics(
+          FRAME_ID,
+          body as FrameActionPayload,
+          "startGameAgain",
+        );
       }
       let nextActions = await getAllNextAction(fid);
       console.log("normal battle", nextActions);

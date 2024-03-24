@@ -32,8 +32,10 @@
   wrap_comments = true
 
 [etherscan]
+  optimism-sepolia = { key = "${API_KEY_OPTIMISM}" }
   base = { key = "${API_KEY_BASE}" }
 
 [rpc_endpoints]
+  optimism-sepolia ="${OPTIMISM_SEPOLIA_RPC}"
   base = "${BASE_MAINNET_RPC}"
   syndicate = "https://rpc-frame.syndicate.io"
