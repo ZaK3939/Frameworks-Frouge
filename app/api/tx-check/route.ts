@@ -29,7 +29,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     try {
       if (message.button == 1) {
         data = enemies[Number(next)];
-        resultText = `You defeat ${data.name} 👾`;
+        resultText = `You defeat ${data.name} 🐸`;
       } else if (message.button == 2) {
         data = equipments[Number(next)];
         if (Number(gold) < Number(data.gold)) {
