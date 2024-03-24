@@ -12,6 +12,28 @@ import {
 import { FrameActionPayload, PinataFDK } from "pinata-fdk";
 import { validButton } from "@/app/lib/buttonUtil";
 
+type FidResponse = {
+  verifications: string[];
+};
+
+// Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
+async function getAddrByFid(fid: number) {
+  const options = {
+    method: 'GET',
+    url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
+    headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || "" },
+  };
+  const resp = await fetch(options.url, { headers: options.headers });
+  const responseBody = await resp.json(); // Parse the response body as JSON
+  if (responseBody.users) {
+    const userVerifications = responseBody.users[0] as FidResponse;
+    if (userVerifications.verifications) {
+      return userVerifications.verifications[0];
+    }
+  }
+  return '0x00';
+}
+
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const searchParams = req.nextUrl.searchParams;
@@ -97,12 +119,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
 
     // Go to LeaderBoard page
-    if (message.button === 2) {
+    if (message?.button === 2) {
+      const address = await getAddrByFid(fid);
       console.log("Go to LeaderBoard page");
+
       return new NextResponse(
         getFrameHtml({
           buttons: [{ label: `Home` }],
-          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}`,
+          image: `${process.env.NEXT_PUBLIC_URL}/api/images/leadersboard?random=${randomValue}&address=${address}`,
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/top`,
         }),
       );
