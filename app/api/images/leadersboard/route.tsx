@@ -28,7 +28,7 @@ type FidResponse = {
 //   return '0x00';
 // }
 
-export async function GET(req: NextRequest) {
+async function getResponse(req: NextRequest): Promise<ImageResponse> {
   // const body: FrameRequest = await req.json();
   // const { isValid, message } = await getFrameMessage(body, {
   //   neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -56,7 +56,6 @@ export async function GET(req: NextRequest) {
     action = data.total_interactions;
   } catch (error) {
     console.error(error);
-    return new Response("An error occurred", { status: 500 });
   }
 
   // Get Clear holders sum
@@ -119,3 +118,9 @@ export async function GET(req: NextRequest) {
     CARD_DIMENSIONS,
   );
 }
+
+export async function GET(req: NextRequest): Promise<Response> {
+  return getResponse(req);
+}
+
+export const dynamic = "force-dynamic";
