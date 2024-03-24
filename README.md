@@ -55,16 +55,16 @@ By using Pinata, a decentralized storage solution, the game can effectively trac
 
 The Leader Board we implemented also utilises the Frames Analytics api to display the number of user actions on the Farcaster frames.
 
-The Leader Board we implemented also utilises the Frames Analytics api to display the number of user actions on the Farcaster frames.
+<img width="578" alt="Screenshot 2024-03-24 at 15 36 39" src="https://github.com/libdefi/Frameworks-Frouge/assets/8872443/bcbc4258-f0f9-40f8-8fab-56d38c20bcf2">
 
-![Screenshot 2024-03-24 at 15.36.39.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/1b829b05-f823-43d7-98de-c14a53029a61/a7159ac5-5558-4945-b523-0c145b714152/Screenshot_2024-03-24_at_15.36.39.png)
 
 
 **◎Airstack** 
 
 By utilising Airstack, it was possible to visualise the number of NFT holders who had cleared games issued on Base and how many games they had cleared themselves via fid.
+<img width="547" alt="Screenshot 2024-03-24 at 15 39 57" src="https://github.com/libdefi/Frameworks-Frouge/assets/8872443/5e7f290d-cf15-4e6e-b723-b7dc86ffe45d">
 
-![Screenshot 2024-03-24 at 15.39.57.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/1b829b05-f823-43d7-98de-c14a53029a61/d7a7ea78-60df-4cd4-8b71-3c5b1b667311/Screenshot_2024-03-24_at_15.39.57.png)
+
 
 **◎Open AI**
 
