@@ -108,6 +108,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     }
 
+    console.log(gameStartAgain, floor, active);
+    console.log(gameStartAgain != "true" && floor != 0 && active == false);
     // handling player gameover/gameclear lasttime Play
     if (gameStartAgain != "true" && floor != 0 && active == false) {
       console.log("handling gameover/gameclear lasttime Play");
