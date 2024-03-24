@@ -51,8 +51,8 @@ export async function GET(req: NextRequest) {
       dataBalance.Base.TokenBalance &&
       dataBalance.Base.TokenBalance.length > 0
     ) {
-      console.log(dataBalance.Base.TokenBalance);
-      balance = dataBalance.Base.TokenBalance[0].amount;
+      // balance = dataBalance.Base.TokenBalance[0].amount;
+      balance = dataBalance.Base.TokenBalance.length;
     }
   }
 
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
         </div>
         <div tw="flex flex-col items-center bg-[#001D85] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
           <div tw="w-full flex justify-start items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">Cleared?</p>
+            <p tw="flex items-center justify-center h-2 m-0">Clear Count</p>
           </div>
           <div tw="bg-[#031159] w-full flex justify-end items-end p-1">
             <p tw="flex items-center justify-center h-2 m-0">{balance}</p>
