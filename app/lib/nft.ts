@@ -24,6 +24,8 @@ export const airdropTo = async (recipient: `0x${string}`, id: number) => {
       transport: http(),
     });
     const account = mnemonicToAccount(NFT_WALLET_MNEMONIC);
+
+    console.log("Minting NFT for", recipient, "with ID", id);
     const tx = await client.sendTransaction({
       account: account,
       to: NFT_CONTRACT_ADDRESS,

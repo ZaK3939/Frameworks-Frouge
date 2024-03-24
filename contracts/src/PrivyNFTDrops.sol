@@ -40,7 +40,7 @@ contract PrivyNFTDrops is Ownable, ERC1155Supply {
     /*//////////////////////////////////////////////////////////////
                             EXTERNAL UPDATE
     //////////////////////////////////////////////////////////////*/
-    function mint(address to, uint256 tokenId) external payable {
+    function mint(address to, uint256 tokenId) external {
         hasMinted[to][tokenId] = true;
         emit Mint(to, tokenId);
 
