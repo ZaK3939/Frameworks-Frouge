@@ -61,7 +61,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             value: parseEther("0.000001").toString(), // 0.000001 ETH
           },
         };
-        console.log("txData", txData);
+
         await fdk.sendAnalytics(
           FRAME_ID,
           body as FrameActionPayload,

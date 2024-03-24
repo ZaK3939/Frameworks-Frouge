@@ -51,6 +51,7 @@ export async function GET(req: NextRequest) {
       dataBalance.Base.TokenBalance &&
       dataBalance.Base.TokenBalance.length > 0
     ) {
+      console.log(dataBalance.Base.TokenBalance);
       balance = dataBalance.Base.TokenBalance[0].amount;
     }
   }
