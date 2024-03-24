@@ -45,13 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       });
       console.log("transaction", transaction);
       // Revive Player except gameClaer
-      console.log(
-        "player revive",
-        active,
-        floor,
-        floor.toString(),
-        active == false && floor != 10,
-      );
+      console.log("player revive", active, floor);
       if (active == false && floor != 10) {
         console.log("player is DEAD");
         await fdk.sendAnalytics(
