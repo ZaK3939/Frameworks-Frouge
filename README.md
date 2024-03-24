@@ -95,9 +95,8 @@ All the backgrounds and game characters for our games were created by OpenAI. We
 | Privy Collection | https://sepolia-optimism.etherscan.io/address/0x10c968CA46Cea35b94D752f5654219B5254cDE4a |
 
 ## Others
-
-**Demo site:** [https://frameworks-frogue.vercel.app/](https://warpcast.com/zak3939/0x610d2a4b)
-
+Play here: [https://warpcast.com/zak3939/0x610d2a4b](https://warpcast.com/zak3939/0x610d2a4b)
+Hosting site: [https://frameworks-frogue.vercel.app/](https://frameworks-frogue.vercel.app/)
 Reference:
 Our game idea was sparked by a great casual game. We would like to thank all the great game makers.
 https://twitter.com/GameTsukuruKun/status/1682324411687505920?s=20
