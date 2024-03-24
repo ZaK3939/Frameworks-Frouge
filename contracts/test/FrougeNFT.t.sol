@@ -46,6 +46,7 @@ contract FrougeNFTTest is Test {
         uint256 score
     )
         public
+        view
         returns (bytes memory signature)
     {
         bytes32 digest =

@@ -8,6 +8,7 @@ export async function airdropToPrivy(
 ): Promise<string | undefined> {
   const ownerAddress = await getOwnerAddressFromFid(fid);
   if (!ownerAddress) return undefined;
+
   // Generate an embedded wallet associated with the fid
   const embeddedWalletAddress = await createOrFindEmbeddedWalletForFid(
     fid,

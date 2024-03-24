@@ -1,6 +1,6 @@
 {
-  "name": "a-frame-in-100-lines",
-  "version": "0.5.1",
+  "name": "frogue",
+  "version": "0.0.1",
   "scripts": {
     "build": "rm -rf .next && next build",
     "dev": "next dev",
@@ -9,7 +9,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "https://twitter.com/Zizzamia",
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.9.9",
