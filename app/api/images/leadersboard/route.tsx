@@ -87,10 +87,12 @@ export async function GET(req: NextRequest) {
         </div>
         <div tw="flex flex-col items-center bg-[#001D85] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
           <div tw="w-full flex justify-start items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">Your clear sum</p>
+            <p tw="flex items-center justify-center h-2 m-0">Clear</p>
           </div>
           <div tw="bg-[#031159] w-full flex justify-end items-end p-1">
-            <p tw="flex items-center justify-center h-2 m-0">{balance}</p>
+            <p tw="flex items-center justify-center h-2 m-0">
+              {balance > 0 ? true : false}
+            </p>
           </div>
         </div>
       </div>
