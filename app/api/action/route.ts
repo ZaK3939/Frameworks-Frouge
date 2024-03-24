@@ -18,8 +18,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const transactionId = searchParams.get("transactionId") ?? "";
   const resultText = searchParams.get("resultText") ?? "";
   const gameStartAgain = searchParams.get("gameStartAgain") ?? "";
-  const initAction = searchParams.get("initAction") ?? "";
-  console.log("initAction", initAction);
   const randomValue = Math.floor(Math.random() * 10000);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY,
@@ -99,13 +97,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
 
     // Go to LeaderBoard page
-    console.log(
-      "initAction",
-      initAction,
-      message.button,
-      message?.button === 2 && initAction === "true",
-    );
-    if (message?.button === 2 && initAction === "true") {
+    if (message.button === 2) {
       console.log("Go to LeaderBoard page");
       return new NextResponse(
         getFrameHtml({
