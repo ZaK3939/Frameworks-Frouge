@@ -30,9 +30,9 @@ type FidResponse = {
 
 export async function GET(req: NextRequest) {
   const body: FrameRequest = await req.json();
-  const { isValid, message } = await getFrameMessage(body, {
-    neynarApiKey: process.env.NEYNAR_API_KEY,
-  });
+  // const { isValid, message } = await getFrameMessage(body, {
+  //   neynarApiKey: process.env.NEYNAR_API_KEY,
+  // });
   const options = {
     method: 'GET',
     headers: {
@@ -40,10 +40,10 @@ export async function GET(req: NextRequest) {
     }
   };
 
-  if (isValid && allowedOrigin(message) && validButton(message)) {
-    const fid = message.interactor.fid;
-    // const addressFromFid = await getAddrByFid(fid);
-    } else return new NextResponse("Unauthorized", { status: 401 });
+  // if (isValid && allowedOrigin(message) && validButton(message)) {
+  //   const fid = message.interactor.fid;
+  //   // const addressFromFid = await getAddrByFid(fid);
+  // }
 
   // Get action sum
   let action = 0;
