@@ -12,18 +12,61 @@
 ## Getting Started
 
 ```
-forge script script/Deploy.s.sol:Deploy --rpc-url syndicate --broadcast --verify --verifier-url https://explorer-frame.syndicate.io/api --verifier blockscout --legacy --ffi
+bun install
+forge install OpenZeppelin/openzeppelin-foundry-upgrades
+forge install OpenZeppelin/openzeppelin-contracts-upgradeable
+forge remappings
 ```
 
-```
-forge script script/Setting.s.sol:Setting --rpc-url syndicate --broadcast --verify --verifier-url https://explorer-frame.syndicate.io/api --verifier blockscout --legacy --ffi
-```
+update .env
+
+## StageFactory.sol
+
+Dynamic Stage Creation: Enables the creation of various game stages, each with unique characteristics such as enemies,
+equipment, and other attributes. This function supports the expanding and evolving nature of the game, allowing for new
+content to be introduced seamlessly.
+
+Modular Game Components: The contract interfaces with different modular components of the game like battles, enemies,
+and equipment. This modular approach facilitates easy updates and changes to individual aspects of the game without
+affecting the entire system.
+
+## Stage.sol
+
+Game Stage Management: The contract manages different stages or levels in the game. Players progress through these
+stages, encountering various challenges and opportunities.
+
+Player Interaction: Players can perform various actions like battling enemies, acquiring equipment, and resting. These
+actions are critical for the progression and strategy within the game.
+
+Equipment and Enemy Handling: It interfaces with other contracts representing enemies and equipment, allowing for
+dynamic encounters and gear acquisition, which are essential elements of gameplay.
+
+Randomness and Game Logic: Incorporates randomness for different game events and ensures logical progression for the
+player within the game stages.
+
+Player Status Tracking: Maintains and updates the status of players, including health, equipment, and progression
+through the floors.
+
+Revival Mechanism: Includes a function for players to revive themselves if defeated, enabling continued gameplay at a
+cost.
+
+Financial Transactions: Manages in-game financial transactions, such as fee collection and handling payments for revival
+or other in-game activities.
+
+## Deoloy
+
+For Stage Create And Deploy
 
 ```
 forge script script/DeployAndSetting.s.sol:DeployAndSetting --rpc-url base --broadcast --verify --legacy --ffi
 ```
 
+For PrivyNFT
+
+```
 forge script script/DeployNFTAndSet.s.sol:DeployNFTAndSet --rpc-url optimism-sepolia --broadcast --verify --legacy --ffi
+
+```
 
 ## License
 
