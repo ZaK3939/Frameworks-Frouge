@@ -2,18 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { ImageResponse } from "next/og";
 import { CARD_DIMENSIONS } from "../../../config";
 import { AllHolders, TokenBalance } from "../../../../graphql/Mint";
-import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
-import { allowedOrigin } from "../../../lib/origin";
-import { validButton } from "@/app/lib/buttonUtil";
-
 
 export async function GET(req: NextRequest) {
-
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
       Authorization: `Bearer ${process.env.PINATA_JWT}`,
-    }
+    },
   };
 
   const searchParams = req.nextUrl.searchParams;
@@ -23,7 +18,10 @@ export async function GET(req: NextRequest) {
   // Get action sum
   let action = 0;
   try {
-    const response = await fetch('https://api.pinata.cloud/farcaster/frames/interactions?custom_id=action&start_date=2024-03-23%2000%3A00%3A00&end_date=2024-04-30%2000%3A00%3A00', options);
+    const response = await fetch(
+      "https://api.pinata.cloud/farcaster/frames/interactions?custom_id=action&start_date=2024-03-23%2000%3A00%3A00&end_date=2024-04-30%2000%3A00%3A00",
+      options,
+    );
     if (!response.ok) {
       throw new Error(`API call failed with status: ${response.status}`);
     }
@@ -43,16 +41,19 @@ export async function GET(req: NextRequest) {
     console.log(err);
   }
 
-   // Get your token balance
+  // Get your token balance
   let balance = 0;
   if (address !== "0x00") {
     const dataBalance = await TokenBalance(address);
-    if (dataBalance.Base && dataBalance.Base.TokenBalance && dataBalance.Base.TokenBalance.length > 0) {
+    console.log("dataBalance=", dataBalance);
+    if (
+      dataBalance.Base &&
+      dataBalance.Base.TokenBalance &&
+      dataBalance.Base.TokenBalance.length > 0
+    ) {
       balance = dataBalance.Base.TokenBalance[0].amount;
     }
   }
-  
-
 
   return new ImageResponse(
     (
@@ -65,7 +66,7 @@ export async function GET(req: NextRequest) {
         tw="relative flex flex-col items-center text-center w-[376px] h-[196px] p-2 overflow-auto pt-16"
       >
         <div tw="flex justify-center w-full mb-2 gap-10">
-          <div tw="flex flex-col items-center bg-[#FF0000] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center mr-4"> 
+          <div tw="flex flex-col items-center bg-[#FF0000] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center mr-4">
             <div tw="w-full flex justify-start items-end p-1">
               <p tw="flex items-center justify-center h-2 m-0">All action</p>
             </div>
@@ -75,7 +76,9 @@ export async function GET(req: NextRequest) {
           </div>
           <div tw="flex flex-col items-center bg-[#CC8207] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
             <div tw="w-full flex justify-start items-end p-1">
-              <p tw="flex items-center justify-center h-2 m-0">Game Clear users</p>
+              <p tw="flex items-center justify-center h-2 m-0">
+                Game Clear users
+              </p>
             </div>
             <div tw="bg-[#B86900] w-full flex justify-end items-end p-1">
               <p tw="flex items-center justify-center h-2 m-0">{HoldersSum}</p>
