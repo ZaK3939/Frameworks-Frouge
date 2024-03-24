@@ -1,10 +1,9 @@
 import { createWalletClient, encodeFunctionData, http } from "viem";
 import { mnemonicToAccount } from "viem/accounts";
 import { optimismSepolia } from "viem/chains";
+import { PRIVY_COLLECTION_NFT_ADDRESS } from "../config";
 
 const NFT_WALLET_MNEMONIC = process.env.NFT_WALLET_MNEMONIC as string;
-const PRIVY_COLLECTION_NFT_ADDRESS = process.env
-  .PRIVY_COLLECTION_NFT_ADDRESS as `0x${string}`; // Optimism Sepolia Testnet
 
 const MINT_ABI = {
   inputs: [
