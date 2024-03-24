@@ -126,7 +126,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             },
           ],
           post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?gameStartAgain=true`,
-          image: `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
+          image:
+            floor === 10
+              ? `${process.env.NEXT_PUBLIC_URL}/background-images/03_clear.png`
+              : `${process.env.NEXT_PUBLIC_URL}/background-images/02_lose.png`,
         }),
       );
     }
