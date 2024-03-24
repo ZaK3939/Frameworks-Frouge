@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { ImageResponse } from "next/og";
 import { CARD_DIMENSIONS } from "../../../config";
+import { AllHolders } from "../../../../graphql/Mint";
 
 export async function GET(req: NextRequest) {
   const options = {
@@ -10,6 +11,7 @@ export async function GET(req: NextRequest) {
     }
   };
 
+  // Get action sum
   let action = 0;
   try {
     const response = await fetch('https://api.pinata.cloud/farcaster/frames/interactions?custom_id=action&start_date=2024-03-23%2000%3A00%3A00&end_date=2024-04-30%2000%3A00%3A00', options);
@@ -23,6 +25,14 @@ export async function GET(req: NextRequest) {
     return new Response("An error occurred", { status: 500 });
   }
 
+  // Get Clear holders sum
+  let HoldersSum = 0;
+  try {
+    const data = await AllHolders();
+    HoldersSum = data.Base.TokenBalance.length;
+  } catch (err) {
+    console.log(err);
+  }
 
   return new ImageResponse(
     (
@@ -37,7 +47,7 @@ export async function GET(req: NextRequest) {
         <div tw="flex justify-center w-full mb-2 gap-10">
           <div tw="flex flex-col items-center bg-[#FF0000] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center mr-4"> 
             <div tw="w-full flex justify-start items-end p-1">
-              <p tw="flex items-center justify-center h-2 m-0">All action sum</p>
+              <p tw="flex items-center justify-center h-2 m-0">All action</p>
             </div>
             <div tw="bg-[#7D0202] w-full flex justify-end items-end p-1">
               <p tw="flex items-center justify-center h-2 m-0">{action}</p>
@@ -45,10 +55,10 @@ export async function GET(req: NextRequest) {
           </div>
           <div tw="flex flex-col items-center bg-[#CC8207] rounded-md text-white w-[110px] h-[52px] border border-white text-xs text-center">
             <div tw="w-full flex justify-start items-end p-1">
-              <p tw="flex items-center justify-center h-2 m-0">Your Point</p>
+              <p tw="flex items-center justify-center h-2 m-0">Game Clear users</p>
             </div>
             <div tw="bg-[#B86900] w-full flex justify-end items-end p-1">
-              <p tw="flex items-center justify-center h-2 m-0">369</p>
+              <p tw="flex items-center justify-center h-2 m-0">{HoldersSum}</p>
             </div>
           </div>
         </div>
