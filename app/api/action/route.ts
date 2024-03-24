@@ -98,8 +98,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
 
     // Go to LeaderBoard page
-    console.log("initAction", initAction, message.button);
+    console.log(
+      "initAction",
+      initAction,
+      message.button,
+      message?.button === 2 && initAction === "true",
+    );
     if (message?.button === 2 && initAction === "true") {
+      console.log("Go to LeaderBoard page");
       return new NextResponse(
         getFrameHtml({
           buttons: [{ label: `Home` }],
