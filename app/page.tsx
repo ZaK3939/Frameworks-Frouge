@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     ],
     image: `${process.env.NEXT_PUBLIC_URL}/background-images/01_start.png`, // Only image
-    post_url: `${process.env.NEXT_PUBLIC_URL}/api/action`,
+    post_url: `${process.env.NEXT_PUBLIC_URL}/api/action?initAction=true`,
   });
 
   return {
