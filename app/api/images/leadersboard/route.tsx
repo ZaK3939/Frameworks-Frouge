@@ -28,11 +28,8 @@ type FidResponse = {
 //   return '0x00';
 // }
 
-async function getResponse(req: NextRequest): Promise<ImageResponse> {
-  const body: FrameRequest = await req.json();
-  const { isValid, message } = await getFrameMessage(body, {
-    neynarApiKey: process.env.NEYNAR_API_KEY,
-  });
+export async function GET(req: NextRequest) {
+
   const options = {
     method: 'GET',
     headers: {
@@ -40,10 +37,9 @@ async function getResponse(req: NextRequest): Promise<ImageResponse> {
     }
   };
 
-  if (isValid && allowedOrigin(message) && validButton(message)) {
-    const fid = message.interactor.fid;
-    // const addressFromFid = await getAddrByFid(fid);
-  }
+  const searchParams = req.nextUrl.searchParams;
+  const fid = searchParams.get("fid") ?? "";
+  console.log("fid=", fid);
 
   // Get action sum
   let action = 0;
@@ -56,6 +52,7 @@ async function getResponse(req: NextRequest): Promise<ImageResponse> {
     action = data.total_interactions;
   } catch (error) {
     console.error(error);
+    return new Response("An error occurred", { status: 500 });
   }
 
   // Get Clear holders sum
@@ -118,9 +115,3 @@ async function getResponse(req: NextRequest): Promise<ImageResponse> {
     CARD_DIMENSIONS,
   );
 }
-
-export async function GET(req: NextRequest): Promise<Response> {
-  return getResponse(req);
-}
-
-export const dynamic = "force-dynamic";
