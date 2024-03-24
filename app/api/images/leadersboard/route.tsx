@@ -4,35 +4,26 @@ import { CARD_DIMENSIONS } from "../../../config";
 import { AllHolders, TokenBalance } from "../../../../graphql/Mint";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 
+type FidResponse = {
+  verifications: string[];
+};
+
 // Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
 async function getAddrByFid(fid: number) {
-  console.log("Extracting address for FID: ", fid);
   const options = {
-    method: "GET",
+    method: 'GET',
     url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
-    headers: {
-      accept: "application/json",
-      api_key: process.env.NEYNAR_API_KEY || "",
-    },
+    headers: { accept: 'application/json', api_key: process.env.NEYNAR_API_KEY || "" },
   };
-  console.log("Fetching user address from Neynar API");
   const resp = await fetch(options.url, { headers: options.headers });
-  console.log("Response: ", resp);
   const responseBody = await resp.json(); // Parse the response body as JSON
-  if (responseBody.users && responseBody.users[0]) {
-    const userVerifications = responseBody.users[0].verifications;
-    if (userVerifications && userVerifications.length > 0) {
-      console.log("User address from Neynar API: ", userVerifications[0]);
-      return userVerifications[0].toString();
-    } else {
-      console.log("No verifications found for user.");
-      // Return a default or error value here
-      return null; // or handle this scenario appropriately
+  if (responseBody.users) {
+    const userVerifications = responseBody.users[0] as FidResponse;
+    if (userVerifications.verifications) {
+      return userVerifications.verifications[0];
     }
-  } else {
-    console.log("Could not fetch user address from Neynar API for FID: ", fid);
-    return "0x0000000000000000000000000000000000000000"; // Consider handling this scenario differently
   }
+  return '0x00';
 }
 
 export async function GET(req: NextRequest) {
